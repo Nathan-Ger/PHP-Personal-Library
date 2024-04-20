@@ -13,6 +13,8 @@ Other publicly accessible PHP scripts.
 Purpose:
 Enhancing security by limiting access to all other parts of your application.
 Serving as the gateway through which all requests are processed and routed to the appropriate parts of your application.
+
+
 /src
 This directory contains the core PHP source code of your application. It is not publicly accessible and typically includes:
 
@@ -25,6 +27,8 @@ Libraries: Any additional libraries that are used internally by your application
 Purpose:
 Keeping your application's internal logic separate from public files, enhancing both security and cleanliness of code.
 Making it easier to navigate and manage your application's backend logic.
+
+
 /includes
 This directory is used to store PHP files that are included in other PHP scripts, such as configuration files, function files, or scripts that define constants:
 
