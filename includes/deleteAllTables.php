@@ -1,6 +1,13 @@
 <?php
     require_once 'login.php';
 
+    /* deleteAllTables.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used to drop all tables, purely used for testing purposes.
+    */
+
     try
     {
         $pdo = new PDO($attr, $user, $password, $opts);
@@ -27,5 +34,4 @@
         }
     }
     
-
 ?>

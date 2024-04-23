@@ -1,6 +1,13 @@
 <?php
     require_once 'login.php';
 
+    /* setupDB.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used to create the tables for the book database then create some sample data.
+    */
+
     try
     {
         $pdo = new PDO($attr, $user, $password, $opts);
@@ -87,36 +94,48 @@
         "INSERT INTO publishers (name) VALUES('Kodansha Comics')",
         "INSERT INTO authors (firstName, lastName) VALUES('Hiro', 'Mashima')",
         "INSERT INTO formats (name) VALUES('Manga')",
+
+        // Book 1
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622767, 'Fairy Tail 1', 3, 3, 2008)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622767, 3)",
 
+        // Book 2
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622774, 'Fairy Tail 2', 3, 3, 2008)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622774, 3)",
 
+        // Book 3
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622781, 'Fairy Tail 3', 3, 3, 2008)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622781, 3)",
 
+        // Book 4
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622798, 'Fairy Tail 4', 3, 3, 2008)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622798, 3)",
 
+        // Book 5
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612620985, 'Fairy Tail 5', 3, 3, 2008)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612620985, 3)",
 
+        // Book 6
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612620992, 'Fairy Tail 6', 3, 3, 2009)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612620992, 3)",
 
+        // Book 7
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612621005, 'Fairy Tail 7', 3, 3, 2009)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612621005, 3)",
 
+        // Book 8
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612621012, 'Fairy Tail 8', 3, 3, 2009)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612621012, 3)",
 
+        // Book 9
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622804, 'Fairy Tail 9', 3, 3, 2009)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622804, 3)",
 
+        // Book 10
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622811, 'Fairy Tail 10', 3, 3, 2010)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622811, 3)",
 
+        // Book 11
         "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622828, 'Fairy Tail 11', 3, 3, 2010)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622828, 3)"
 
@@ -130,5 +149,4 @@
         }
     }
     
-
 ?>
