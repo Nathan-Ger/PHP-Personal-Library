@@ -1,5 +1,5 @@
 <?php
-    require_once 'login.php';
+    require_once '../src/login.php';
 
     /* setupDB.php
     * @author Nathanael Germain

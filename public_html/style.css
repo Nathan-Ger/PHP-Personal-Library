@@ -1,0 +1,29 @@
+/* style.css
+* @author Nathanael Germain
+* I certify that this submission is my own original work.
+*
+* This file contains the CSS for all of the forms.
+*/
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.form-group label {
+    flex-basis: 130px;
+    flex-shrink: 0;
+}
+
+.form-group input {
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+.box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 20px;
+    display: inline-block;
+}

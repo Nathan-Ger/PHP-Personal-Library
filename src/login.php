@@ -1,35 +1,17 @@
 <?php
-session_start();
+    session_start();
 
-// Mock user credentials for validation
-$valid_username = "admin";
-$valid_password = "password123";
+    $host = 'localhost';
+    $data = 'bcs350sp24';
+    $user = 'usersp24';
+    $password = 'pwdsp24';
+    $chrs = 'utf8mb4';
+    $attr = "mysql:host=$host;dbname=$data;charset=$chrs";
+    $opts =
+    [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
 
-// Check if form data is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Validate credentials
-    if ($username == $valid_username && $password == $valid_password) {
-        $_SESSION['username'] = $username;
-        header("Location: welcome.php"); // Redirect to welcome page
-        exit();
-    } else {
-        $error_message = "Invalid username or password!";
-    }
-}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Failed</title>
-</head>
-<body>
-    <p><?php echo $error_message ?? ''; ?></p>
-    <a href="index.html">Try Again</a>
-</body>
-</html>
