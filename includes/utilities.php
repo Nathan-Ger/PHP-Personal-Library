@@ -6,9 +6,12 @@
     * This file is used for utility functions that are used in the project.
     */
 
-
     function fix_string($string) {
         return htmlentities($string);
+    }
+
+    function hash_password($password) {
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
 ?>

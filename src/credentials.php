@@ -1,6 +1,4 @@
 <?php
-    session_start();
-
     $host = 'localhost';
     $data = 'bcs350sp24';
     $user = 'usersp24';

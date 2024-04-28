@@ -4,11 +4,13 @@
     * I certify that this submission is my own original work.
     *
     * This file is used for validation functions, that are used in the registration purpose of the project.
-    * Truthfully this code is not necessary, but I just generally prefer more "abstraction" in my code. 
+    * Truthfully this code is not necessary, but I just generally prefer more "abstraction" in my code.
     * But this project in particular has no need for it.
     */
 
-    function validateUsername($username) {
+    function validateUsername($pdo, $username) {
+
+
         if ($username == "")
             return "No Username was entered.\\n";
         else if (strlen($username) < 6)
@@ -39,9 +41,6 @@
     }
 
     function validateConfirmPassword($password, $confirmPassword) {
-
-        echo "Password: $password, Confirm Password: $confirmPassword\\n";
-
         if ($password != $confirmPassword)
             return "Passwords do not match.\\n";
         return "";

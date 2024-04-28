@@ -3,11 +3,18 @@
 <!DOCTYPE html>
 <html>
 
+<!-- registerForm.php
+    @author Nathanael Germain
+    I certify that this submission is my own original work.
+
+    This is the file for the register form.
+-->
+
 <head>
-    <title> BCS350 Captsone Project -- Nathanael Germain </title>
+    <title> Registration Form </title>
     <meta name="fileName" content="registerForm.html">
     <meta name="author" content="Nathanael Germain">
-    <meta name="integrityStatement" content="I certify that this submission is my own original work">
+    <meta name="integrityStatement" content="I certify that this submission is my own original work.">
     <link rel="stylesheet" href="style.css">
     <script src="registerValidation.js"></script>
 
@@ -16,7 +23,7 @@
 <body>
 
     <div class="box">
-        BCS350 Captsone Project -- Nathanael Germain
+        BCS350 Capstone Project -- Nathanael Germain
     </div>
 
     <form action="register.php" method="POST" onsubmit="return validate(this)">
@@ -46,8 +53,9 @@
         </div>
         <div class="flex items-center justify-between">
             <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Log
-                In</button>
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+            <a href="loginForm.php"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
         </div>
     </form>
 

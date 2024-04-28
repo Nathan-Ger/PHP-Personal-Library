@@ -1,7 +1,14 @@
 <?php
-    require_once '../src/login.php';
+    require_once '../src/credentials.php';
     require_once '../includes/utilities.php';
     require_once '../includes/validateFunctions.php';
+    require_once '../includes/databaseFunctions.php';
+
+    try {
+        $pdo = new PDO($attr, $user, $password, $opts);
+    } catch (PDOException $e) {
+        throw new PDOException($e->getMessage(), (int)$e->getCode());
+    }
 
     $username = $email = $password = $confirmPassword = "";
 
@@ -14,19 +21,18 @@
     if (isset($_POST['confirmPassword']))
         $confirmPassword = fix_string($_POST['confirmPassword']);
 
-    $fail = validateUsername($username);
+    $fail = validateUsername($pdo, $username);
     $fail .= validateEmail($email);
     $fail .= validatePassword($password);
     $fail .= validateConfirmPassword($password, $confirmPassword);
 
     if ($fail == "") {
-        
-        echo "</head><body>Form data successfully validated:
-            $username, $email, $password, $confirmPassword.</body></html>";
 
-        //TODO: Add user to database
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-        //TODO: Redirect to login page / Welcome page
+            addUser($pdo, $username, $email, $hashedPassword);
+
+            //TODO: Redirect to login page / Welcome page
     } else {
         echo $fail;
     }
