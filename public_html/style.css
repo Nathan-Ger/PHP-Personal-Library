@@ -21,6 +21,35 @@
     max-width: 200px;
 }
 
+.form-group button {
+    display: inline-block;
+    font-size: 1em;
+    padding: 5px 10px;
+    margin: 10px 2px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #000000;
+    background-color: #A9A9A9;
+}
+
+.form-group button:hover {
+    background-color: #808080;
+}
+
+table {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+}
+
+tr:first-child {
+    text-decoration: underline;
+}
+
 .box {
     border: 1px solid #ccc;
     padding: 10px;

@@ -80,17 +80,19 @@
         }
     }
 
+    // Creating a test user admin, this is because our books table requires a username, only people with a given username can access their books
+
     $username = 'admin';
     $password = password_hash('mysql', PASSWORD_BCRYPT);
     $email = 'admin@admin.org';
 
     $stmt = $pdo->prepare('INSERT INTO users VALUES (?, ?, ?)');
 
-        $stmt->bindParam(1, $username, PDO::PARAM_STR);
-        $stmt->bindParam(2, $password, PDO::PARAM_STR);
-        $stmt->bindParam(3, $email, PDO::PARAM_STR);
+    $stmt->bindParam(1, $username, PDO::PARAM_STR);
+    $stmt->bindParam(2, $password, PDO::PARAM_STR);
+    $stmt->bindParam(3, $email, PDO::PARAM_STR);
 
-        $stmt->execute([$username, $password, $email]);
+    $stmt->execute([$username, $password, $email]);
 
     $queries = [
         
@@ -98,12 +100,12 @@
         "INSERT INTO publishers (name) VALUES('Orbit')",
         "INSERT INTO authors (firstName, lastName) VALUES('Andrzej', 'Sapkowski')",
         "INSERT INTO formats (name) VALUES('Paperback')",
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year, username) VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 2017, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 1, 2017, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316438964, 1)",
 
         // Inserting The Witcher: Sword of Destiny hardcover book by Andrzej Sapkowski
         "INSERT INTO formats (name) VALUES('Hardcover')",
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year, username) VALUES(9780316453264, 'The Witcher: Sword of Destiny', 1, 2, 2022, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9780316453264, 'The Witcher: Sword of Destiny', 2, 1, 2, 2022, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316453264, 1)",
 
         // Inserting Grandmaster of Demonic Cultivation 1 paperback book by Mo Xiang Tong Xiu
@@ -112,7 +114,8 @@
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781648279195, 'Grandmaster of Demonic Cultivation', 1, 2, 1, 2021, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781648279195, 2)",
 
-        // Inserting the first 11 books of the Fairy Tale manga by Hiro Mashima
+        // Inserting the first 11 books of the Fairy Tale manga by Hiro Mashima,
+        // This allows us to test multiple books in the same series.
         "INSERT INTO publishers (name) VALUES('Kodansha Comics')",
         "INSERT INTO authors (firstName, lastName) VALUES('Hiro', 'Mashima')",
         "INSERT INTO formats (name) VALUES('Manga')",
@@ -159,7 +162,15 @@
 
         // Book 11
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622828, 'Fairy Tail ', 11, 3, 3, 2010, 'admin')",
-        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622828, 3)"
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622828, 3)",
+
+        // Inserting The Copper Gauntlet book by Cassandra Clare and Holly Black, this allows us to test multiple authors
+        "INSERT INTO publishers (name) VALUES('Scholastic')",
+        "INSERT INTO authors (firstName, lastName) VALUES('Cassandra', 'Clare')",
+        "INSERT INTO authors (firstName, lastName) VALUES('Holly', 'Black')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9780545522298, 'The Copper Gauntlet', 2, 4, 1, 2015, 'admin')",
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780545522298, 4)",
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780545522298, 5)"
 
     ];
 

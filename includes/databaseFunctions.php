@@ -50,4 +50,51 @@
 
     #endregion
 
+    function retrieveAllBooks($pdo) {
+        // TODO: Make a new field for bookSeriesName and leave a series name as that, for example,
+        // 'The Witcher' would be the bookSeriesName, while 'The Last Wish' would be the title
+        // This would allow for a series to be grouped together, and allow for a series to be displayed in a more organized manner
+        $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
+        $stmt->bindParam(1, $_SESSION['username']);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    function retrieveAllAuthors($pdo, $ISBN) {
+        $stmt = $pdo->prepare('SELECT author_ID FROM book_authors WHERE book_ISBN = ?');
+        $stmt->bindParam(1, $ISBN);
+        $stmt->execute();
+
+        $authorIDs = $stmt->fetchAll();
+        $authorNames = [];
+
+        foreach ($authorIDs as $authorID) {
+            $stmt = $pdo->prepare('SELECT firstName, lastName FROM authors WHERE ID = ?');
+            $stmt->bindParam(1, $authorID['author_ID']);
+            $stmt->execute();
+
+            $author = $stmt->fetch();
+            $authorNames[] = $author['firstName'] . ' ' . $author['lastName'];
+        }
+
+        return $authorNames;
+    }
+
+    function retrievePublisherName($pdo, $publisherID) {
+        $stmt = $pdo->prepare('SELECT * FROM publishers WHERE ID = ?');
+        $stmt->bindParam(1, $publisherID);
+        $stmt->execute();
+        
+        return $stmt->fetch()['name'];
+    }
+
+    function retrieveFormatName($pdo, $formatID) {
+        $stmt = $pdo->prepare('SELECT * FROM formats WHERE ID = ?');
+        $stmt->bindParam(1, $formatID);
+        $stmt->execute();
+
+        return $stmt->fetch()['name'];
+    }
+
 ?>

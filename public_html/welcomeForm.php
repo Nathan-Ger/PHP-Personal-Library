@@ -22,38 +22,81 @@
 
 <head>
     <title> Home Page - Welcome <?php echo $_SESSION['username']; ?> </title>
-    <meta name="fileName" content="welcomeForm.html">
+    <meta name="fileName" content="welcomeForm.php">
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <div class="box">
-        BCS350 Capstone Project -- Nathanael Germain
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="box">
+            BCS350 Capstone Project -- Nathanael Germain
+        </div>
+        <div class="form-group" style="display: flex; justify-content: flex-end;">
+            <form action="logout.php" method="POST">
+                <button type="submit" style="margin-left: 10px;" class="bg-green-500 hover:bg-green-700
+                text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
+            </form>
+        </div>
     </div>
 
-    <form action="login.php" method="POST">
-        <div class="form-group">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Test1:</label>
-            <input type="text" name="username" id="username"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required>
-        </div>
-        <div class="form-group">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Test2:</label>
-            <input type="password" name="password" id="password"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
-        </div>
-        <div class="flex items-center justify-between">
-            <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
-            <button type="button" style="margin-left: 10px;" onclick="window.location.href='registerForm.php'"
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register Here!</button>
-        </div>
-        
-    </form>
+    <!-- TODO: Add a search Function and add Button, below the above -->
+    <!-- Search function will only show pieces of data that were searched(bring to another html) -->
+    <!-- Add Button will bring to another html form to add a book to the database -->
+
+    <table>
+        <tr>
+            <th>Book Title</th>
+            <th>Book #</th>
+            <th>Author(s)</th>
+            <th>Publisher</th>
+            <th>Format</th>
+            <th>Year of Release</th>
+            <th>Have Read?</th>
+        </tr>
+        <?php
+            require_once '../src/credentials.php';
+            require_once '../includes/databaseFunctions.php';
+
+            try {
+                $pdo = new PDO($attr, $user, $password, $opts);
+            } catch (PDOException $e) {
+                throw new PDOException($e->getMessage(), (int)$e->getCode());
+            }
+        ?>
+        <tr>
+            <!-- TODO: Add a button to delete each row of data -->
+            <?php
+            $books = retrieveAllBooks($pdo);
+
+            foreach ($books as $book) {
+
+                $ISBN = fix_string($book['ISBN']);
+
+                echo "<tr>";
+                echo "<td>" . sanitize($pdo, $book['title']) . "</td>";
+                echo "<td>" . sanitize($pdo, $book['bookNumber']) . "</td>";
+
+                $authors = retrieveAllAuthors($pdo, $ISBN);
+                $authors = sanitize($pdo, implode(', ', $authors));
+                echo "<td>" . $authors . "</td>";
+
+                $publisherID = fix_string($book['publisherID']);
+                $formatID = fix_string($book['formatID']);
+                
+                $publisherName = retrievePublisherName($pdo, $publisherID);
+                $formatName = retrieveFormatName($pdo, $formatID);
+
+                echo "<td>" . $pdo->quote($publisherName) . "</td>";
+                echo "<td>" . $pdo->quote($formatName) . "</td>";
+                echo "<td>" . sanitize($pdo, $book['year']) . "</td>";
+                $read = sanitize($pdo, $book['haveRead']) == 1 ? "Yes" : "No";
+                echo "<td>" . $read . "</td>";
+            }
+            ?>
+        </tr>
+
+    </table>
 
 </body>
 
