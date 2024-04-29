@@ -1,4 +1,6 @@
-<?php //session_start(); ?>
+<?php
+session_start();
+?>
 
 <!DOCTYPE html>
 <html>
@@ -54,8 +56,8 @@
         <div class="flex items-center justify-between">
             <button type="submit"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
-            <a href="loginForm.php"
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</a>
+            <button type="button" style="margin-left: 10px;" onclick="window.location.href='loginForm.php'"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login Here!</button>
         </div>
     </form>
 

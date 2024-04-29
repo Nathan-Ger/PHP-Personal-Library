@@ -1,26 +1,28 @@
 <?php
-session_start();
+    session_start();
 
-if (isset($_SESSION['username'])) {
-    header('Location: welcomeForm.php'); //TODO: Bring to the home page
-    exit();
-}
+    // Checks to make sure there is a session active.
+    if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
+        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
+    }
 
 ?>
 
 <!DOCTYPE html>
 <html>
 
-<!-- loginForm.php
+<!-- welcomeForm.php
     @author Nathanael Germain
     I certify that this submission is my own original work.
 
-    This is the file for the login form.
+    This is the page a user enters after logging in.
+    It is the home page of the project.
+    The session is checked to make sure the user is actually logged in.
 -->
 
 <head>
-    <title> Login Form </title>
-    <meta name="fileName" content="loginForm.html">
+    <title> Home Page - Welcome <?php echo $_SESSION['username']; ?> </title>
+    <meta name="fileName" content="welcomeForm.html">
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -33,13 +35,13 @@ if (isset($_SESSION['username'])) {
 
     <form action="login.php" method="POST">
         <div class="form-group">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username:</label>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Test1:</label>
             <input type="text" name="username" id="username"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required>
         </div>
         <div class="form-group">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password:</label>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Test2:</label>
             <input type="password" name="password" id="password"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 required>

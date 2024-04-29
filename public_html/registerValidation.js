@@ -25,9 +25,12 @@ function validate(form) {
 * @return A string containing an error message if the username is invalid, otherwise an empty string.
 */
 function validateUsername(username) {
+    // Testing readibility, using a constant to test this here, but not sure if it helps much.
+    const MINIMUM_USERNAME_LENGTH = 6;
+
     if (username == "")
         return "No Username was entered.\n"
-    else if (username.length < 6)
+    else if (username.length < MINIMUM_USERNAME_LENGTH)
         return "Usernames must be at least 6 characters.\n"
     else if (/[^a-zA-Z0-9_-]/.test(username))
         return "Only a-z, A-Z, 0-9, - and _ allowed in Usernames.\n"
@@ -42,9 +45,12 @@ function validateUsername(username) {
 * @return A string containing an error message if the password is invalid, otherwise an empty string.
 */
 function validatePassword(password) {
+    // Testing readibility, using a constant to test this here, but not sure if it helps much.
+    const MINIMUM_PASSWORD_LENGTH = 8;
+
     if (password == "")
         return "No Password was entered.\n"
-    else if (password.length < 8)
+    else if (password.length < MINIMUM_PASSWORD_LENGTH)
         return "Passwords must be at least 8 characters.\n"
     else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password))
         return "Passwords require one each of a-z, A-Z and 0-9.\n"
@@ -72,7 +78,8 @@ function validateConfirmPassword(password, confirmPassword) {
 * @return A string containing an error message if the username is invalid, otherwise an empty string.
 */
 function validateEmail(email) {
-    if (email == "") return "No Email was entered.\n"
+    if (email == "") 
+        return "No Email was entered.\n"
     else if (!((email.indexOf(".") > 0) && (email.indexOf("@") > 0)) || /[^a-zA-Z0-9.@_-]/.test(email))
         return "The Email address is invalid.\n"
     return ""

@@ -28,14 +28,16 @@
 
     if ($fail == "") {
 
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            addUser($pdo, $username, $email, $hashedPassword);
+        addUser($pdo, $username, $email, $hashedPassword);
 
-            //TODO: Redirect to login page / Welcome page
+        echo "Registration successful! Please log in."; // TODO: Change it so it looks better
+
+        die ("<p><a href='loginForm.php'>Click here to login</a></p>"); //TODO: Bring up a box that says Login Here! and be able to exit out of it and be at the login page.
+        //TODO: Change it so it outputs a textblock saying registration successful.
     } else {
         echo $fail;
+        include 'registerForm.php'; // Brings you back to the registration page if there was an error.
     }
-
-    include 'registerForm.php';
 ?>

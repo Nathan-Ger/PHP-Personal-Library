@@ -7,10 +7,13 @@
     * Truthfully this code is not necessary, but I just generally prefer more "abstraction" in my code.
     * But this project in particular has no need for it.
     */
+    require_once '../includes/databaseFunctions.php';
+
+    // TODO: Change so all error message are returned in a way to make them look much better
 
     function validateUsername($pdo, $username) {
-
-
+        if (duplicateUsername($pdo, $username))
+            return "Username already exists.\\n";
         if ($username == "")
             return "No Username was entered.\\n";
         else if (strlen($username) < 6)
@@ -34,8 +37,8 @@
         else if (strlen($password) < 8)
             return "Passwords must be at least 8 characters.\\n";
         else if (!preg_match("/[a-z]/", $password) ||
-                !preg_match("/[A-Z]/", $password) ||
-                !preg_match("/[0-9]/", $password))
+                    !preg_match("/[A-Z]/", $password) ||
+                    !preg_match("/[0-9]/", $password))
             return "Passwords require 1 each of a-z, A-Z and 0-9.\\n";
         return "";
     }

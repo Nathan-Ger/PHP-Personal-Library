@@ -1,5 +1,7 @@
 <?php
     require_once '../src/credentials.php';
+    require_once '../includes/databaseFunctions.php';
+    require_once '../includes/utilities.php';
 
     /* setupDB.php
     * @author Nathanael Germain
@@ -27,35 +29,43 @@
 
         "CREATE TABLE IF NOT EXISTS publishers (
             ID SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(128) NOT NULL
+            name VARCHAR(128) NOT NULL UNIQUE
         )",
 
         "CREATE TABLE IF NOT EXISTS authors (
             ID SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             firstName VARCHAR(128) NOT NULL,
-            lastName VARCHAR(128) NOT NULL
+            lastName VARCHAR(128) NOT NULL,
+            FULLTEXT(firstName, lastName)
         )",
 
         "CREATE TABLE IF NOT EXISTS formats (
             ID SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(128) NOT NULL
+            name VARCHAR(128) NOT NULL UNIQUE
         )",
 
         "CREATE TABLE IF NOT EXISTS books (
             ISBN VARCHAR(13) NOT NULL PRIMARY KEY,
             title VARCHAR(128) NOT NULL,
-            publisherID SMALLINT NOT NULL,
+            bookNumber SMALLINT,
+            publisherID SMALLINT,
             formatID SMALLINT,
             year SMALLINT,
             haveRead BOOLEAN DEFAULT FALSE,
-            INDEX(title(20)),
+            username VARCHAR(50) NOT NULL,
+            FULLTEXT(title),
+            INDEX(publisherID),
+            INDEX(formatID),
+            INDEX(username),
             FOREIGN KEY (publisherID) REFERENCES publishers(ID),
-            FOREIGN KEY (formatID) REFERENCES formats(ID)
+            FOREIGN KEY (formatID) REFERENCES formats(ID),
+            FOREIGN KEY (username) REFERENCES users(username)
         )",
         "CREATE TABLE IF NOT EXISTS book_authors (
             book_ISBN VARCHAR(13) NOT NULL,
             author_ID SMALLINT NOT NULL,
             PRIMARY KEY (book_ISBN, author_ID),
+            INDEX(book_ISBN),
             FOREIGN KEY (book_ISBN) REFERENCES books(ISBN),
             FOREIGN KEY (author_ID) REFERENCES authors(ID)
         )"
@@ -70,24 +80,36 @@
         }
     }
 
+    $username = 'admin';
+    $password = password_hash('mysql', PASSWORD_BCRYPT);
+    $email = 'admin@admin.org';
+
+    $stmt = $pdo->prepare('INSERT INTO users VALUES (?, ?, ?)');
+
+        $stmt->bindParam(1, $username, PDO::PARAM_STR);
+        $stmt->bindParam(2, $password, PDO::PARAM_STR);
+        $stmt->bindParam(3, $email, PDO::PARAM_STR);
+
+        $stmt->execute([$username, $password, $email]);
+
     $queries = [
         
         // Inserting The Witcher: The Last Wish paperback book by Andrzej Sapkowski
         "INSERT INTO publishers (name) VALUES('Orbit')",
         "INSERT INTO authors (firstName, lastName) VALUES('Andrzej', 'Sapkowski')",
         "INSERT INTO formats (name) VALUES('Paperback')",
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 2017)",
+        "INSERT INTO books (ISBN, title, publisherID, formatID, year, username) VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 2017, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316438964, 1)",
 
         // Inserting The Witcher: Sword of Destiny hardcover book by Andrzej Sapkowski
         "INSERT INTO formats (name) VALUES('Hardcover')",
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9780316453264, 'The Witcher: Sword of Destiny', 1, 2, 2022)",
+        "INSERT INTO books (ISBN, title, publisherID, formatID, year, username) VALUES(9780316453264, 'The Witcher: Sword of Destiny', 1, 2, 2022, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316453264, 1)",
 
         // Inserting Grandmaster of Demonic Cultivation 1 paperback book by Mo Xiang Tong Xiu
         "INSERT INTO publishers (name) VALUES('Seven Seas Entertainment')",
         "INSERT INTO authors (firstName, lastName) VALUES('Mo Xiang', 'Tong Xiu')",
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781648279195, 'Grandmaster of Demonic Cultivation 1', 2, 1, 2021)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781648279195, 'Grandmaster of Demonic Cultivation', 1, 2, 1, 2021, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781648279195, 2)",
 
         // Inserting the first 11 books of the Fairy Tale manga by Hiro Mashima
@@ -96,47 +118,47 @@
         "INSERT INTO formats (name) VALUES('Manga')",
 
         // Book 1
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622767, 'Fairy Tail 1', 3, 3, 2008)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622767, 'Fairy Tail', 1, 3, 3, 2008, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622767, 3)",
 
         // Book 2
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622774, 'Fairy Tail 2', 3, 3, 2008)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622774, 'Fairy Tail', 2, 3, 3, 2008, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622774, 3)",
 
         // Book 3
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622781, 'Fairy Tail 3', 3, 3, 2008)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622781, 'Fairy Tail', 3, 3, 3, 2008, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622781, 3)",
 
         // Book 4
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622798, 'Fairy Tail 4', 3, 3, 2008)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622798, 'Fairy Tail', 4, 3, 3, 2008, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622798, 3)",
 
         // Book 5
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612620985, 'Fairy Tail 5', 3, 3, 2008)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612620985, 'Fairy Tail', 5, 3, 3, 2008, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612620985, 3)",
 
         // Book 6
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612620992, 'Fairy Tail 6', 3, 3, 2009)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612620992, 'Fairy Tail', 6, 3, 3, 2009, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612620992, 3)",
 
         // Book 7
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612621005, 'Fairy Tail 7', 3, 3, 2009)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612621005, 'Fairy Tail', 7, 3, 3, 2009, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612621005, 3)",
 
         // Book 8
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612621012, 'Fairy Tail 8', 3, 3, 2009)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612621012, 'Fairy Tail', 8, 3, 3, 2009, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612621012, 3)",
 
         // Book 9
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622804, 'Fairy Tail 9', 3, 3, 2009)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622804, 'Fairy Tail', 9, 3, 3, 2009, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622804, 3)",
 
         // Book 10
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622811, 'Fairy Tail 10', 3, 3, 2010)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622811, 'Fairy Tail', 10, 3, 3, 2010, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622811, 3)",
 
         // Book 11
-        "INSERT INTO books (ISBN, title, publisherID, formatID, year) VALUES(9781612622828, 'Fairy Tail 11', 3, 3, 2010)",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username) VALUES(9781612622828, 'Fairy Tail ', 11, 3, 3, 2010, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622828, 3)"
 
     ];
