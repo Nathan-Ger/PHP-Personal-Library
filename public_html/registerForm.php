@@ -14,12 +14,11 @@ session_start();
 
 <head>
     <title> Registration Form </title>
-    <meta name="fileName" content="registerForm.html">
+    <meta name="fileName" content="registerForm.php">
     <meta name="author" content="Nathanael Germain">
     <meta name="integrityStatement" content="I certify that this submission is my own original work.">
     <link rel="stylesheet" href="style.css">
     <script src="registerValidation.js"></script>
-
 </head>
 
 <body>

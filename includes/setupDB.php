@@ -45,7 +45,8 @@
         )",
 
         "CREATE TABLE IF NOT EXISTS books (
-            ISBN VARCHAR(13) NOT NULL PRIMARY KEY,
+            bookID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            ISBN VARCHAR(13) NOT NULL,
             title VARCHAR(128) NOT NULL,
             bookNumber SMALLINT,
             publisherID SMALLINT,
@@ -54,6 +55,7 @@
             haveRead BOOLEAN DEFAULT FALSE,
             username VARCHAR(50) NOT NULL,
             FULLTEXT(title),
+            INDEX(ISBN),
             INDEX(publisherID),
             INDEX(formatID),
             INDEX(username),
@@ -66,7 +68,6 @@
             author_ID SMALLINT NOT NULL,
             PRIMARY KEY (book_ISBN, author_ID),
             INDEX(book_ISBN),
-            FOREIGN KEY (book_ISBN) REFERENCES books(ISBN),
             FOREIGN KEY (author_ID) REFERENCES authors(ID)
         )"
 

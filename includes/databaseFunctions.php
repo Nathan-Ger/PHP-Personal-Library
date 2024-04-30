@@ -97,4 +97,11 @@
         return $stmt->fetch()['name'];
     }
 
+    function deleteBook($pdo, $ISBN) {
+        $stmt = $pdo->prepare('DELETE FROM books WHERE ISBN = ? AND username = ?');
+        $stmt->bindParam(1, $ISBN);
+        $stmt->bindParam(2, $_SESSION['username']);
+        $stmt->execute();
+    }
+
 ?>

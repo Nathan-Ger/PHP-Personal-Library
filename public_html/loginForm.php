@@ -20,7 +20,7 @@ if (isset($_SESSION['username'])) {
 
 <head>
     <title> Login Form </title>
-    <meta name="fileName" content="loginForm.html">
+    <meta name="fileName" content="loginForm.php">
     <link rel="stylesheet" href="style.css">
 
 </head>

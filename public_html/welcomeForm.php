@@ -5,7 +5,6 @@
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
         die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,7 @@
         </div>
     </div>
 
-    <!-- TODO: Add a search Function and add Button, below the above -->
+    <!-- TODO: Add a search Function and an add Button, below the above -->
     <!-- Search function will only show pieces of data that were searched(bring to another html) -->
     <!-- Add Button will bring to another html form to add a book to the database -->
 
@@ -65,18 +64,19 @@
             }
         ?>
         <tr>
-            <!-- TODO: Add a button to delete each row of data -->
             <?php
             $books = retrieveAllBooks($pdo);
 
             foreach ($books as $book) {
 
+                // Get ISBN, not displayed but used for other parts of the page.
                 $ISBN = fix_string($book['ISBN']);
 
                 echo "<tr>";
                 echo "<td>" . sanitize($pdo, $book['title']) . "</td>";
                 echo "<td>" . sanitize($pdo, $book['bookNumber']) . "</td>";
 
+                // Retrieves all authors for given ISBN, sanitizes them, then displays them all (comma separated).
                 $authors = retrieveAllAuthors($pdo, $ISBN);
                 $authors = sanitize($pdo, implode(', ', $authors));
                 echo "<td>" . $authors . "</td>";
@@ -84,6 +84,7 @@
                 $publisherID = fix_string($book['publisherID']);
                 $formatID = fix_string($book['formatID']);
                 
+                // Retrieves the publisher name and format name using the respective IDs.
                 $publisherName = retrievePublisherName($pdo, $publisherID);
                 $formatName = retrieveFormatName($pdo, $formatID);
 
@@ -92,6 +93,17 @@
                 echo "<td>" . sanitize($pdo, $book['year']) . "</td>";
                 $read = sanitize($pdo, $book['haveRead']) == 1 ? "Yes" : "No";
                 echo "<td>" . $read . "</td>";
+
+                // Adds a delete button to each row
+                echo "<td>";
+                echo "<form action='delete.php' method='POST'>";
+                echo "<input type='hidden' name='ISBN' value='" . $ISBN . "'>";
+                echo "<input type='submit' value='Delete' class='delete-button'>";
+                echo "</form>";
+                echo "</td>";
+
+                echo "</tr>";
+
             }
             ?>
         </tr>

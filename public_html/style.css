@@ -38,6 +38,21 @@
     background-color: #808080;
 }
 
+.delete-button {
+    display: inline-block;
+    font-size: 0.9em;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #000000;
+    background-color: #FF0000;
+}
+
+.delete-button:hover {
+    background-color: #b60000;
+}
+
 table {
     border: 1px solid black;
 }
