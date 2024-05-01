@@ -15,6 +15,7 @@ if (isset($_SESSION['username'])) {
     I certify that this submission is my own original work.
 
     This is the file for the login form.
+    Checks if a user is logged in and if they are, they are redirected to the home page.
 -->
 
 <head>

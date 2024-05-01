@@ -1,8 +1,10 @@
 /* addBookValidation.js
 * @author Nathanael Germain
+* I certify that this submission is my own original work.
 *
-* This file is used to validate the addBook form.
+* This file is used to validate the addBook form in .js.
 */
+
 // This function checks to make sure no fields are empty, if not returns an error message.
 function validate(form) {
     fail = validateISBN(form.ISBN.value)

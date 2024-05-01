@@ -3,6 +3,14 @@
     require_once '../includes/validateFunctions.php';
     require_once '../includes/databaseFunctions.php';
 
+    /* register.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used to take the username, email, password, and confirm password from the registration form and
+    * add it to the database if the information is validated.
+    */
+
     try {
         $pdo = new PDO($attr, $user, $password, $opts);
     } catch (PDOException $e) {

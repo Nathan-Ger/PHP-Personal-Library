@@ -1,4 +1,12 @@
 <?php
+
+    /* credentials.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used to store the credentials for the database.
+    */
+
     $host = 'localhost';
     $data = 'bcs350sp24';
     $user = 'usersp24';

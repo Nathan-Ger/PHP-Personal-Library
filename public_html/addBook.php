@@ -1,8 +1,15 @@
 <?php
-
     require_once '../src/credentials.php';
     require_once '../includes/validateFunctions.php';
     require_once '../includes/databaseFunctions.php';
+
+    /* addBook.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used to take data from the add book form and send it to a function
+    * that will add the book to the database.
+    */
 
     try {
         $pdo = new PDO($attr, $user, $password, $opts);

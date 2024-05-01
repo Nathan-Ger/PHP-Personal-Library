@@ -3,7 +3,8 @@
 
     // Checks to make sure there is a session active.
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
-        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
+        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>");
+        //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
     }
 ?>
 

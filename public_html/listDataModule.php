@@ -14,8 +14,8 @@
     @author Nathanael Germain
     I certify that this submission is my own original work.
 
-    This is the page a user enters after logging in.
-    It is the home page of the project.
+    This is the page for listing data.
+    It is the list data module of the project.
     The session is checked to make sure the user is actually logged in.
 -->
 

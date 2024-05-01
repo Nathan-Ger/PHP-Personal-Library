@@ -2,6 +2,14 @@
     require_once '../src/credentials.php';
     require_once '../includes/utilities.php';
 
+    /* databaseFunctions.php
+    * @author Nathanael Germain
+    * I certify that this submission is my own original work.
+    *
+    * This file is used for all the functions that interact with the database.
+    * This includes functions for adding, deleting, searching, and retrieving data.
+    */
+
     #region Utility Functions
 
     function fix_string($string) {

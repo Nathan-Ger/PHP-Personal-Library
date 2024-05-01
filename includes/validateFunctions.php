@@ -3,9 +3,8 @@
     * @author Nathanael Germain
     * I certify that this submission is my own original work.
     *
-    * This file is used for validation functions, that are used in the registration purpose of the project.
-    * Truthfully this code is not necessary, but I just generally prefer more "abstraction" in my code.
-    * But this project in particular has no need for it.
+    * This file is used for validation functions,
+    * such as validating the registration form and the add book form.
     */
     require_once '../includes/databaseFunctions.php';
 

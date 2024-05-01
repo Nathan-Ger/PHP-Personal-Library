@@ -11,11 +11,11 @@
 <!DOCTYPE html>
 <html>
 
-<!-- registerForm.php
+<!-- addBookModule.php
     @author Nathanael Germain
     I certify that this submission is my own original work.
 
-    This is the file for adding a book to the database.
+    This is the form for adding a book to the database.
 -->
 
 <head>
