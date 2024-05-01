@@ -1,6 +1,5 @@
 <?php
     require_once '../src/credentials.php';
-    require_once '../includes/utilities.php';
     require_once '../includes/validateFunctions.php';
     require_once '../includes/databaseFunctions.php';
 

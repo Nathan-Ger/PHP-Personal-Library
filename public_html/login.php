@@ -18,7 +18,7 @@
 
         echo htmlspecialchars("Welcome " . $_SESSION['username']);
 
-        die ("<p><a href='welcomeForm.php'>Click here to continue</a></p>"); //TODO: Bring up a box that says Welcome $_SESSION['username'] and be able to exit out of it and be at the home page.
+        die ("<p><a href='homePageForm.php'>Click here to continue</a></p>"); //TODO: Bring up a box that says Welcome $_SESSION['username'] and be able to exit out of it and be at the home page.
     } else {
         die ("Please enter your username and password");
     }

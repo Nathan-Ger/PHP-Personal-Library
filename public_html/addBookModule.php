@@ -20,7 +20,7 @@
 
 <head>
     <title> Add Book Form </title>
-    <meta name="fileName" content="addBookForm.php">
+    <meta name="fileName" content="addBookModule.php">
     <meta name="author" content="Nathanael Germain">
     <meta name="integrityStatement" content="I certify that this submission is my own original work.">
     <link rel="stylesheet" href="style.css">
@@ -42,6 +42,7 @@
     </div>
 
     <!-- TODO: Add a way to go back to home page -->
+    <!-- TODO: Add a addBook.php file -->
 
     <form action="addBook.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">

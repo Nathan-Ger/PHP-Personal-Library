@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (isset($_SESSION['username'])) {
+    header('Location: homePageForm.php'); //TODO: Bring to the home page
+    exit();
+}
 ?>
 
 <!DOCTYPE html>

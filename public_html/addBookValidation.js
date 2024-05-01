@@ -102,7 +102,7 @@ function validateYear(year) {
 
     if (year == "")
         return "No Year was entered.\n"
-    else if (year.length < YEAR_LENGTH)
+    else if (year.length != YEAR_LENGTH)
         return "Year must be 4 characters.\n"
     else if (/[^0-9]/.test(year))
         return "Only 0-9 allowed in Year.\n"

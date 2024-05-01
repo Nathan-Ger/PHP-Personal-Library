@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- welcomeForm.php
+<!-- listDataModule.php
     @author Nathanael Germain
     I certify that this submission is my own original work.
 
@@ -21,7 +21,7 @@
 
 <head>
     <title> Home Page - Welcome <?php echo $_SESSION['username']; ?> </title>
-    <meta name="fileName" content="welcomeForm.php">
+    <meta name="fileName" content="listDataModule.php">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,9 +39,11 @@
         </div>
     </div>
 
-    <!-- TODO: Add a search Function and an add Button, below the above -->
+    <!-- TODO: Add a search Function, below the above -->
     <!-- Search function will only show pieces of data that were searched(bring to another html) -->
-    <!-- Add Button will bring to another html form to add a book to the database -->
+
+    <!-- TODO: Add a way to edit book data -->
+    <!-- You would have the user make a selection of what to edit, then bring up a form to edit the data -->
 
     <table>
         <tr>

@@ -2,10 +2,9 @@
 session_start();
 
 if (isset($_SESSION['username'])) {
-    header('Location: welcomeForm.php'); //TODO: Bring to the home page
+    header('Location: homePageForm.php'); //TODO: Bring to the home page
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>

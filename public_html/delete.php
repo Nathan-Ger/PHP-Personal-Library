@@ -18,5 +18,5 @@
     deleteBook($pdo, $ISBN);
 
     echo "Book deleted!"; // TODO: Change it so it looks better
-    die ("<p><a href='welcomeForm.php'>Click here to return</a></p>"); //TODO: Bring up a box that says Book Deleted! with a button to saying OK and be able to exit out of it and be at the home page.
+    die ("<p><a href='homePageForm.php'>Click here to return to home page</a></p>"); //TODO: Bring up a box that says Book Deleted! with a button to saying OK and be able to exit out of it and be at the home page.
 ?>

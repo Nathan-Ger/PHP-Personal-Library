@@ -2,6 +2,19 @@
     require_once '../src/credentials.php';
     require_once '../includes/utilities.php';
 
+    #region Utility Functions
+
+    function fix_string($string) {
+        return htmlentities($string);
+    }
+
+    function sanitize($pdo, $string) {
+        $string = fix_string($string);
+        return $pdo->quote($string);
+    }
+
+    #endregion
+
     #region Login and Registration Functions
 
     function addUser($pdo, $username, $email, $hashedPassword) {
@@ -12,11 +25,6 @@
         $stmt->bindParam(3, $email, PDO::PARAM_STR);
 
         $stmt->execute([$username, $hashedPassword, $email]);
-    }
-
-    function sanitize($pdo, $string) {
-        $string = fix_string($string);
-        return $pdo->quote($string);
     }
     
     function duplicateUsername($pdo, $username) {
@@ -49,6 +57,8 @@
     }
 
     #endregion
+
+    #region Retrieving Data Functions
 
     function retrieveAllBooks($pdo) {
         // TODO: Make a new field for bookSeriesName and leave a series name as that, for example,
@@ -96,6 +106,8 @@
 
         return $stmt->fetch()['name'];
     }
+
+    #endregion
 
     function deleteBook($pdo, $ISBN) {
         $stmt = $pdo->prepare('DELETE FROM books WHERE ISBN = ? AND username = ?');
