@@ -5,6 +5,13 @@
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
         die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
     }
+
+    // TODO: Add isset functions to check for data to display, for now it is defaulted to none.
+    // This will allow us to search for books by specific pieces of data.
+
+    $field = 'none';
+    $value = 'none';
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +27,7 @@
 -->
 
 <head>
-    <title> Home Page - Welcome <?php echo $_SESSION['username']; ?> </title>
+    <title> Book List </title>
     <meta name="fileName" content="listDataModule.php">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -67,7 +74,7 @@
         ?>
         <tr>
             <?php
-            $books = retrieveAllBooks($pdo);
+            $books = retrieveAllBooks($pdo, $field, $value);
 
             foreach ($books as $book) {
 

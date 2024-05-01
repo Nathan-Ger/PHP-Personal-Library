@@ -28,13 +28,40 @@
     margin: 10px 2px;
     cursor: pointer;
     text-align: center;
-    text-decoration: none;
-    outline: none;
     color: #000000;
     background-color: #A9A9A9;
 }
 
 .form-group button:hover {
+    background-color: #808080;
+}
+
+.form-group-search {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.form-group-search input {
+    flex-grow: 1;
+    max-width: 400px;
+    margin-right: 10px;
+}
+
+.form-group-search button {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    font-size: .8em;
+    padding: 0 10px;
+    margin: 10px 2px;
+    cursor: pointer;
+    text-align: center;
+    color: #000000;
+    background-color: #A9A9A9;
+}
+
+.form-group-search button:hover {
     background-color: #808080;
 }
 

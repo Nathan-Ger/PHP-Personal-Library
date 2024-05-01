@@ -19,10 +19,8 @@
 -->
 
 <head>
-    <title> Add Book Form </title>
+    <title> Add Book </title>
     <meta name="fileName" content="addBookModule.php">
-    <meta name="author" content="Nathanael Germain">
-    <meta name="integrityStatement" content="I certify that this submission is my own original work.">
     <link rel="stylesheet" href="style.css">
     <script src="addBookValidation.js"></script>
 </head>

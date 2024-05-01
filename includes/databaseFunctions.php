@@ -1,6 +1,5 @@
 <?php
     require_once '../src/credentials.php';
-    require_once '../includes/utilities.php';
 
     /* databaseFunctions.php
     * @author Nathanael Germain
@@ -68,13 +67,19 @@
 
     #region Retrieving Data Functions
 
-    function retrieveAllBooks($pdo) {
+    function retrieveAllBooks($pdo, $field, $value) {
         // TODO: Make a new field for bookSeriesName and leave a series name as that, for example,
         // 'The Witcher' would be the bookSeriesName, while 'The Last Wish' would be the title
         // This would allow for a series to be grouped together, and allow for a series to be displayed in a more organized manner
-        $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
-        $stmt->bindParam(1, $_SESSION['username']);
-        $stmt->execute();
+
+        if ($field == 'none') {
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $_SESSION['username']);
+            $stmt->execute();
+        }
+
+        // TODO: Add more fields to search by, such as author, publisher, format, ISBN, title, and haveRead.
+        // $value is the value that is being searched for. THIS DATA MUST BE SANITIZED BEFORE BEING PASSED TO THIS FUNCTION.
 
         return $stmt->fetchAll();
     }

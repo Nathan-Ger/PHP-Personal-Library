@@ -42,7 +42,7 @@
     <div class="form-group">
         <button type="button" style="margin-left: 10px;" onclick="window.location.href='listDataModule.php'"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">List all Data</button>
-        <button type="button" style="margin-left: 10px;" onclick="window.location.href='searchModule.php'"
+        <button type="button" style="margin-left: 10px;" onclick="window.location.href='searchBookModule.php'"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Search for Books</button>
         <button type="button" style="margin-left: 10px;" onclick="window.location.href='addBookModule.php'"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add a Book</button>
