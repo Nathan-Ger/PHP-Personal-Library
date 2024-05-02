@@ -40,50 +40,57 @@
     </div>
 
     <!-- TODO: Add a way to go back to home page -->
-    <!-- TODO: Add a addBook.php file -->
+
+    <!-- TODO: Add a way to add author(s) to the book -->
 
     <form action="addBook.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="ISBN">ISBN-13:</label>
             <input type="text" name="ISBN" id="ISBN"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter ISBN, 0-9 only" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title:</label>
             <input type="text" name="title" id="title"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter title" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="bookNumber">Number in Series:</label>
             <input type="text" name="bookNumber" id="bookNumber"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter the book number, 0-9 only" required>
+        </div>
+        <div class="form-group">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="authors">Author(s):</label>
+            <input type="text" name="authors" id="authors"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                style="max-width: 450px;" placeholder="Enter author names, separated by commas" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="publisherName">Publisher Name:</label>
             <input type="text" name="publisherName" id="publisherName"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter publisher name" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="formatName">Format Type:</label>
             <input type="text" name="formatName" id="formatName"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter format name" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="year">Year Released:</label>
             <input type="text" name="year" id="year"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter year, in the format of 2001" required>
         </div>
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="haveRead">Have You Read? (Yes or No):</label>
             <input type="text" name="haveRead" id="haveRead"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                required>
+                style="max-width: 450px;" placeholder="Enter Yes or No" required>
         </div>
         <div class="form-group">
             <button type="submit"

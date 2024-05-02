@@ -60,7 +60,9 @@
     * as it is makes sense to have functions dedicated to returning IDs for the specific columns.
     */
 
-    function validateISBN($ISBN) {
+    function validateISBN($pdo, $ISBN, $username) {
+        if (bookDatabaseCheck($pdo, $ISBN, $username))
+            return "ISBN already exists.\\n";
         if ($ISBN == "")
             return "No ISBN was entered.\\n";
         else if (strlen($ISBN) != 13)
@@ -81,6 +83,12 @@
             return "No Book Number was entered.\\n";
         else if (preg_match("/[^0-9]/", $bookNumber))
             return "Only 0-9 allowed in Book Number.\\n";
+        return "";
+    }
+
+    function validateAuthors($authors) {
+        if ($authors == "")
+            return "No Author was entered.\\n";
         return "";
     }
 

@@ -10,6 +10,7 @@ function validate(form) {
     fail = validateISBN(form.ISBN.value)
     fail += validateTitle(form.title.value)
     fail += validateBookNumber(form.bookNumber.value)
+    fail += validateAuthors(form.authors.value)
     fail += validatePubName(form.publisherName.value)
     fail += validateFormatName(form.formatName.value)
     fail += validateYear(form.year.value)
@@ -65,6 +66,12 @@ function validateBookNumber(bookNumber) {
         return "No Book Number was entered.\n"
     else if (/[^0-9]/.test(bookNumber))
         return "Only 0-9 allowed in Book Number.\n"
+    return ""
+}
+
+function validateAuthors(authors) {
+    if (authors == "")
+        return "No Author was entered.\n"
     return ""
 }
 

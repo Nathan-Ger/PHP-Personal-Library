@@ -100,7 +100,7 @@
                 echo "<td>" . $pdo->quote($publisherName) . "</td>";
                 echo "<td>" . $pdo->quote($formatName) . "</td>";
                 echo "<td>" . sanitize($pdo, $book['year']) . "</td>";
-                $read = sanitize($pdo, $book['haveRead']) == 1 ? "Yes" : "No";
+                $read = (int)sanitize($pdo, $book['haveRead']) == 1 ? "Yes" : "No";
                 echo "<td>" . $read . "</td>";
 
                 // Adds a delete button to each row

@@ -1,7 +1,11 @@
 <?php
+    session_start();
+
     require_once '../src/credentials.php';
     require_once '../includes/validateFunctions.php';
     require_once '../includes/databaseFunctions.php';
+
+    echo $_SESSION['username'];
 
     /* addBook.php
     * @author Nathanael Germain
@@ -17,7 +21,7 @@
         throw new PDOException($e->getMessage(), (int)$e->getCode());
     }
 
-    $ISBN = $title = $bookNumber = $publisherName = $formatName = $year = $haveRead = "";
+    $ISBN = $title = $bookNumber =  $authors = $publisherName = $formatName = $year = $haveRead = "";
 
     if (isset($_POST['ISBN']))
         $ISBN = fix_string($_POST['ISBN']);
@@ -25,6 +29,8 @@
         $title = fix_string($_POST['title']);
     if (isset($_POST['bookNumber']))
         $bookNumber = fix_string($_POST['bookNumber']);
+    if (isset($_POST['authors']))
+        $authors = fix_string($_POST['authors']);
     if (isset($_POST['publisherName']))
         $publisherName = fix_string($_POST['publisherName']);
     if (isset($_POST['formatName']))
@@ -34,9 +40,10 @@
     if (isset($_POST['haveRead']))
         $haveRead = fix_string($_POST['haveRead']);
 
-    $fail = validateISBN($ISBN);
+    $fail = validateISBN($pdo, $ISBN, $_SESSION['username']);
     $fail .= validateTitle($title);
     $fail .= validateBookNumber($bookNumber);
+    $fail .= validateAuthors($authors);
     $fail .= validatePubName($publisherName);
     $fail .= validateFormatName($formatName);
     $fail .= validateYear($year);
@@ -44,8 +51,7 @@
 
     if ($fail == "") {
 
-        // TODO: Add code to add the book to the database.
-        // This function will then check if the data is already there and do the checks in that file.
+        addBook($pdo, $ISBN, $title, $bookNumber, $authors, $publisherName, $formatName, $year, $haveRead, $_SESSION['username']);
 
         echo "Book added succesfully!"; // TODO: Change it so it looks better
         die ("<p><a href='listDataModule.php'>Click here to return to you list of books!</a></p>");
