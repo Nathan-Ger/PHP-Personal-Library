@@ -28,7 +28,8 @@
 
         "CREATE TABLE IF NOT EXISTS publishers (
             ID SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(128) NOT NULL UNIQUE
+            name VARCHAR(128) NOT NULL UNIQUE,
+            FULLTEXT(name)
         )",
 
         "CREATE TABLE IF NOT EXISTS authors (
@@ -40,7 +41,8 @@
 
         "CREATE TABLE IF NOT EXISTS formats (
             ID SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(128) NOT NULL UNIQUE
+            name VARCHAR(128) NOT NULL UNIQUE,
+            FULLTEXT(name)
         )",
 
         "CREATE TABLE IF NOT EXISTS books (

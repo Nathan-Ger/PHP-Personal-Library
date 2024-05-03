@@ -5,8 +5,6 @@
     require_once '../includes/validateFunctions.php';
     require_once '../includes/databaseFunctions.php';
 
-    echo $_SESSION['username'];
-
     /* addBook.php
     * @author Nathanael Germain
     * I certify that this submission is my own original work.

@@ -71,14 +71,47 @@
 
     #region Retrieving Data Functions
 
-    function retrieveAllBooks($pdo, $field, $value) {
+    function retrieveBooks($pdo, $field, $value) {
         // TODO: Make a new field for bookSeriesName and leave a series name as that, for example,
         // 'The Witcher' would be the bookSeriesName, while 'The Last Wish' would be the title
         // This would allow for a series to be grouped together, and allow for a series to be displayed in a more organized manner
 
-        if ($field == 'none') {
+        if ($field == 'none' || $value == 'none') { // If not input was received on what to search for
             $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
             $stmt->bindParam(1, $_SESSION['username']);
+            $stmt->execute();
+        } else if ($field == 'ISBN' || $field == 'haveRead') { // If the field is ISBN or haveRead, will only get books matching the value
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $field . ' = ? AND username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $value);
+            $stmt->bindParam(2, $_SESSION['username']);
+            $stmt->execute();
+        } else if ($field == 'title') { // If the field is title, will get all books that have the value in the title
+            $value = '%' . $value . '%';
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $field . ' LIKE ? AND username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $value);
+            $stmt->bindParam(2, $_SESSION['username']);
+            $stmt->execute();
+        } else if ($field == 'formatName' || $field == 'publisherName') { // If the field is formatName or publisherName, will get all books that have the value in the format or publisher
+            $table = '';
+
+            if ($field == 'formatName') {
+                $table = 'formats';
+                $fieldName = 'formatID';
+            }
+            else if ($field == 'publisherName') {
+                $table = 'publishers';
+                $fieldName = 'publisherID';
+            }
+
+            // TODO: Create a way to retrieve a list of IDs that match the value, then search for books for ALL of those IDs
+            $ID = retrieveID($pdo, $value, $table);
+
+            if (!$ID)
+                return [];
+
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $fieldName . ' = ? AND username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $ID);
+            $stmt->bindParam(2, $_SESSION['username']);
             $stmt->execute();
         }
 
@@ -126,12 +159,7 @@
 
     #endregion
 
-    function deleteBook($pdo, $ISBN) {
-        $stmt = $pdo->prepare('DELETE FROM books WHERE ISBN = ? AND username = ?');
-        $stmt->bindParam(1, $ISBN);
-        $stmt->bindParam(2, $_SESSION['username']);
-        $stmt->execute();
-    }
+    #region Add Book Functions
 
     function addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName, $formatName, $year, $haveRead, $username) {
         $haveRead = strtolower($haveRead);
@@ -204,6 +232,21 @@
         }
     }
 
+    function retrieveID($pdo, $name, $table) {
+        $name = '%' . $name . '%';
+        $stmt = $pdo->prepare('SELECT ID FROM ' . $table . ' WHERE name LIKE ?');
+        $stmt->bindParam(1, $name);
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+        
+        if ($result) {
+            return $result['ID'];
+        } else {
+            return false;
+        }
+    }
+
     function retrieveOrAddAuthor($pdo, $firstName, $lastName) {
         $stmt = $pdo->prepare('SELECT ID FROM authors WHERE firstName = ? AND lastName = ?');
         $stmt->bindParam(1, $firstName);
@@ -262,48 +305,22 @@
         return $authorsDetails;
     }
 
-    /*function retrievePublisherID($pdo, $publisherName) {
-        $stmt = $pdo->prepare('SELECT ID FROM publishers WHERE name = ?');
-        $stmt->bindParam(1, $publisherName);
+    #endregion
+
+    function searchBook($pdo, $searchInput, $option) {
+        $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $option . ' = ? AND username = ?');
+        $stmt->bindParam(1, $searchInput);
+        $stmt->bindParam(2, $_SESSION['username']);
         $stmt->execute();
 
-        if (!$stmt->rowCount()) {
-            $stmt = $pdo->prepare('INSERT INTO publishers (name) VALUES (?)');
-            $stmt->bindParam(1, $publisherName);
-            $stmt->execute([$publisherName]);
+        return $stmt->fetchAll();
+    }
 
-            return $pdo->lastInsertId();
-        } else {
-            $result = $stmt->fetch();
-            return $result['ID'];
-        }
-    }*/
-
-    /* retrieveOrAddID($pdo, $name, $table)
-    *
-    * This function is used to retrieve the ID of a given name from a given table.
-    * It only works with tables that have an ID and name column (e.g. publishers, formats)
-    * If the name is not found in the table, it will be added to the table and returned.
-    */
-    
-
-
-    /*function retrieveFormatID($pdo, $formatName) {
-        $stmt = $pdo->prepare('SELECT ID FROM formats WHERE name = ?');
-        $stmt->bindParam(1, $formatName);
+    function deleteBook($pdo, $ISBN) {
+        $stmt = $pdo->prepare('DELETE FROM books WHERE ISBN = ? AND username = ?');
+        $stmt->bindParam(1, $ISBN);
+        $stmt->bindParam(2, $_SESSION['username']);
         $stmt->execute();
-
-        if (!$stmt->rowCount()) {
-            $stmt = $pdo->prepare('INSERT INTO formats (name) VALUES (?)');
-            $stmt->bindParam(1, $formatName);
-            $stmt->execute([$formatName]);
-
-            return $pdo->lastInsertId();
-        } else {
-            $result = $stmt->fetch();
-            return $result['ID'];
-        }
-    }*/
-
+    }
 
 ?>

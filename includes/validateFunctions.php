@@ -132,4 +132,10 @@
 
     #endregion
 
+    function validateSearchInput($searchInput) {
+        if ($searchInput == "")
+            return "No search input was entered.\\n";
+        return "";
+    }
+
 ?>

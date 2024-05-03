@@ -32,14 +32,16 @@
             BCS350 Capstone Project -- Nathanael Germain
         </div>
         <div class="form-group" style="display: flex; justify-content: flex-end;">
+            <form action="returnToMainMenu.php" method="POST">
+                <button type="submit" class="bg-green-500 hover:bg-green-700
+                text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Main Menu</button>
+            </form>
             <form action="logout.php" method="POST">
-                <button type="submit" style="margin-left: 10px;" class="bg-green-500 hover:bg-green-700
+                <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
             </form>
         </div>
     </div>
-
-    <!-- TODO: Add a way to go back to home page -->
 
     <form action="addBook.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">

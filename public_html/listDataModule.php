@@ -9,8 +9,14 @@
     // TODO: Add isset functions to check for data to display, for now it is defaulted to none.
     // This will allow us to search for books by specific pieces of data.
 
-    $field = 'none';
-    $value = 'none';
+    if (isset($_SESSION['field']) && isset($_SESSION['value'])) {
+        $field = $_SESSION['field'];
+        $value = $_SESSION['value'];
+        unset($_SESSION['field']);
+        unset($_SESSION['value']);
+    } else {
+        $field = $value = 'none';
+    }
 
 ?>
 
@@ -39,8 +45,12 @@
             BCS350 Capstone Project -- Nathanael Germain
         </div>
         <div class="form-group" style="display: flex; justify-content: flex-end;">
+            <form action="returnToMainMenu.php" method="POST">
+                <button type="submit" class="bg-green-500 hover:bg-green-700
+                text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Main Menu</button>
+            </form>
             <form action="logout.php" method="POST">
-                <button type="submit" style="margin-left: 10px;" class="bg-green-500 hover:bg-green-700
+                <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
             </form>
         </div>
@@ -74,7 +84,7 @@
         ?>
         <tr>
             <?php
-            $books = retrieveAllBooks($pdo, $field, $value);
+            $books = retrieveBooks($pdo, $field, $value);
 
             foreach ($books as $book) {
 

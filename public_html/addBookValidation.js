@@ -16,7 +16,8 @@ function validate(form) {
     fail += validateYear(form.year.value)
     fail += validateHaveRead(form.haveRead.value)
 
-    if (fail == "") return true
+    if (fail == "")
+        return true
     else {
         alert(fail);
         return false
