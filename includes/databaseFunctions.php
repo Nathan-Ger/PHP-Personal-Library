@@ -133,7 +133,7 @@
         $stmt->execute();
     }
 
-    function addBook($pdo, $ISBN, $title, $bookNumber, $authors, $publisherName, $formatName, $year, $haveRead, $username) {
+    function addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName, $formatName, $year, $haveRead, $username) {
         $haveRead = strtolower($haveRead);
 
         if($haveRead == 'yes' || $haveRead == 'y' || $haveRead == '1' || $haveRead == 'true' || $haveRead == 't')
@@ -141,7 +141,17 @@
         else
             $haveRead = 0;
 
-        // TODO: Explode the authors, then check whether they exist in the authors table, if not add them.
+        // Will get the list of authorDetails and add any to authors table if they do not exist.
+        $authorIDs = [];
+        $j = 0;
+        for ($i = 0; $i < count($authorDetails); $i += 2) {
+            $firstName = $authorDetails[$i];
+            $lastName = $authorDetails[$i + 1];
+
+            $authorID = retrieveOrAddAuthor($pdo, $firstName, $lastName);
+            $authorIDs[$j] = $authorID;
+            $j++;
+        }
 
         $publisherID = retrieveOrAddID($pdo, $publisherName, 'publishers');
         $formatID = retrieveOrAddID($pdo, $formatName, 'formats');
@@ -157,7 +167,14 @@
         $stmt->bindParam(8, $username);
         $stmt->execute();
 
-        // TODO: Add to books_author table, make sure to check first
+        // TODO: Add a check for book_authors to see if the author and ISBN combination is already in the table.
+        // Similar to retrieveOrAddAuthor, but for book_authors.
+        for ($i = 0; $i < count($authorIDs); $i++) {
+            $stmt = $pdo->prepare('INSERT INTO book_authors (book_ISBN, author_ID) VALUES (?, ?)');
+            $stmt->bindParam(1, $ISBN);
+            $stmt->bindParam(2, $authorIDs[$i]);
+            $stmt->execute();
+        }
     }
 
     function bookDatabaseCheck($pdo, $ISBN, $username) {
@@ -185,6 +202,64 @@
             $result = $stmt->fetch();
             return $result['ID'];
         }
+    }
+
+    function retrieveOrAddAuthor($pdo, $firstName, $lastName) {
+        $stmt = $pdo->prepare('SELECT ID FROM authors WHERE firstName = ? AND lastName = ?');
+        $stmt->bindParam(1, $firstName);
+        $stmt->bindParam(2, $lastName);
+        $stmt->execute();
+
+        if (!$stmt->rowCount()) {
+            $stmt = $pdo->prepare('INSERT INTO authors (firstName, lastName) VALUES (?, ?)');
+            $stmt->bindParam(1, $firstName);
+            $stmt->bindParam(2, $lastName);
+            $stmt->execute([$firstName, $lastName]);
+
+            return $pdo->lastInsertId();
+        } else {
+            $result = $stmt->fetch();
+            return $result['ID'];
+        }
+    }
+
+    /* parseAuthors($authors)
+    *
+    * This function is used to parse the authors string into an array of first and last names.
+    * It first separates the authors by the comma.
+    * Then it separates the first and last names by the space and adds them in the order of first name, last name
+    * to an array and returns it.
+    *
+    * @param $authors - The string of authors to be parsed.
+    * @return $authorsDetails - The array of first and last names of the authors.
+    */
+    function parseAuthors($authors) {
+        $authorArray = explode(", ", $authors);
+
+        $authorsDetails = [];
+
+        $j = 0;
+        for ($i = 0; $i < count($authorArray); $i++) {
+            $authorsNames = explode(" ", $authorArray[$i]);
+
+            $firstName = $authorsNames[0];
+            $authorsDetails[$j] = $firstName;
+            $j++;
+
+            if (isset($authorsNames[1])) {
+                $lastName = $authorsNames[1];
+            } else {
+                $lastName = "";
+            }
+            $authorsDetails[$j] = $lastName;
+            $j++;
+        }
+
+        for ($i = 0; $i < count($authorsDetails); $i++) {
+            $authorsDetails[$i] = fix_string($authorsDetails[$i]);
+        }
+
+        return $authorsDetails;
     }
 
     /*function retrievePublisherID($pdo, $publisherName) {

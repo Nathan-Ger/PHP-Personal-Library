@@ -1,7 +1,6 @@
 <?php
     require_once '../src/credentials.php';
     require_once '../includes/databaseFunctions.php';
-    require_once '../includes/utilities.php';
 
     /* setupDB.php
     * @author Nathanael Germain
@@ -101,22 +100,22 @@
         // Inserting The Witcher: The Last Wish paperback book by Andrzej Sapkowski
         "INSERT INTO publishers (name) VALUES('Orbit')",
         "INSERT INTO authors (firstName, lastName) VALUES('Andrzej', 'Sapkowski')",
-        "INSERT INTO formats (name) VALUES('Paperback')",
+        "INSERT INTO formats (name) VALUES('Novel')",
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
                 VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 1, 2017, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316438964, 1)",
 
         // Inserting The Witcher: Sword of Destiny hardcover book by Andrzej Sapkowski
-        "INSERT INTO formats (name) VALUES('Hardcover')",
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9780316453264, 'The Witcher: Sword of Destiny', 2, 1, 2, 2022, 'admin')",
+                VALUES(9780316453264, 'The Witcher: Sword of Destiny', 2, 1, 1, 2022, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316453264, 1)",
 
         // Inserting Grandmaster of Demonic Cultivation 1 paperback book by Mo Xiang Tong Xiu
         "INSERT INTO publishers (name) VALUES('Seven Seas Entertainment')",
         "INSERT INTO authors (firstName, lastName) VALUES('Mo Xiang', 'Tong Xiu')",
+        "INSERT INTO formats (name) VALUES('Light Novel')",
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9781648279195, 'Grandmaster of Demonic Cultivation', 1, 2, 1, 2021, 'admin')",
+                VALUES(9781648279195, 'Grandmaster of Demonic Cultivation', 1, 2, 2, 2021, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781648279195, 2)",
 
         // Inserting the first 11 books of the Fairy Tale manga by Hiro Mashima,
@@ -188,7 +187,17 @@
         "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
                 VALUES(9780545522298, 'The Copper Gauntlet', 2, 4, 1, 2015, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780545522298, 4)",
-        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780545522298, 5)"
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780545522298, 5)",
+
+        // Inserting The Death Mage book by Densuke and Ban!,
+        // this allows us to test books with no last name
+        "INSERT INTO publishers (name) VALUES('One Peace Books')",
+        "INSERT INTO authors (firstName, lastName) VALUES('Densuke', '')",
+        "INSERT INTO authors (firstName, lastName) VALUES('Ban!', '')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
+                VALUES(9781642732023, 'The Death Mage', 1, 5, 2, 2022, 'admin')",
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781642732023, 6)",
+        "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781642732023, 7)"
 
     ];
 

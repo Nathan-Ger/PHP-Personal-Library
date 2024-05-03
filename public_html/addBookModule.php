@@ -41,8 +41,6 @@
 
     <!-- TODO: Add a way to go back to home page -->
 
-    <!-- TODO: Add a way to add author(s) to the book -->
-
     <form action="addBook.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="ISBN">ISBN-13:</label>

@@ -29,8 +29,11 @@
         $title = fix_string($_POST['title']);
     if (isset($_POST['bookNumber']))
         $bookNumber = fix_string($_POST['bookNumber']);
-    if (isset($_POST['authors']))
-        $authors = fix_string($_POST['authors']);
+    if (isset($_POST['authors'])) {
+        $authors = $_POST['authors']; // Authors gets the fix_string function in the parseAuthors function
+        $authorDetails = parseAuthors($authors);
+        $authors = fix_string($authors); // Only used for validation functions
+    }
     if (isset($_POST['publisherName']))
         $publisherName = fix_string($_POST['publisherName']);
     if (isset($_POST['formatName']))
@@ -51,7 +54,7 @@
 
     if ($fail == "") {
 
-        addBook($pdo, $ISBN, $title, $bookNumber, $authors, $publisherName, $formatName, $year, $haveRead, $_SESSION['username']);
+        addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName, $formatName, $year, $haveRead, $_SESSION['username']);
 
         echo "Book added succesfully!"; // TODO: Change it so it looks better
         die ("<p><a href='listDataModule.php'>Click here to return to you list of books!</a></p>");

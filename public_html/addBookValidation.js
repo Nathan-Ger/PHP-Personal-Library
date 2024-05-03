@@ -132,7 +132,7 @@ function validateHaveRead(haveRead) {
         return "No Have Read was entered.\n"
 
     // Convert to lowercase for comparison
-    haveRead - haveRead.toLowerCase();
+    haveRead = haveRead.toLowerCase();
 
     if (haveRead != "yes" && haveRead != "no"
         && haveRead != "true" && haveRead != "false"
