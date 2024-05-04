@@ -55,6 +55,7 @@
 
     <!-- TODO: Add a way to edit book data -->
     <!-- You would have the user make a selection of what to edit, then bring up a form to edit the data -->
+    <!-- This will not be added for final end product -->
 
     <table>
         <tr>

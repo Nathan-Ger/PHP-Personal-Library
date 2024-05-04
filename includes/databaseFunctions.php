@@ -74,6 +74,7 @@
         // TODO: Make a new field for bookSeriesName and leave a series name as that, for example,
         // 'The Witcher' would be the bookSeriesName, while 'The Last Wish' would be the title
         // This would allow for a series to be grouped together, and allow for a series to be displayed in a more organized manner
+        // This will not be added in final end product.
 
         $books = [];
 
