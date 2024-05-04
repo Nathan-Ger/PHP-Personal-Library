@@ -81,6 +81,8 @@
             $books = retrieveBooksByISBN($pdo, $value);
         else if ($field == 'title')
             $books = retrieveBooksByTitle($pdo, $value);
+        else if ($field == 'firstName' || $field == 'lastName')
+            $books = retrieveBooksByAuthor($pdo, $field, $value);
         else if ($field == 'haveRead')
             $books = retrieveBooksByHaveRead($pdo, $value);
         else if ($field == 'formatName' || $field == 'publisherName')
@@ -91,8 +93,6 @@
             $stmt->execute();
             $books = $stmt->fetchAll();
         }
-
-        // TODO: Search by authors.
 
         return $books;
     }
@@ -112,6 +112,39 @@
         $stmt->bindParam(2, $_SESSION['username']);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    function retrieveBooksByAuthor($pdo, $field, $name) {
+        $name = '%' . $name . '%';
+        $stmt = $pdo->prepare('SELECT ID FROM authors WHERE ' . $field . ' LIKE ?');
+        $stmt->bindParam(1, $name);
+        $stmt->execute();
+
+        $authorIDs = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+        $books = [];
+
+        // Gets the ISBN for any books that match one of the author IDs
+        foreach ($authorIDs as $authorID) {
+            $stmt = $pdo->prepare('SELECT book_ISBN FROM book_authors WHERE author_ID = ?');
+            $stmt->bindParam(1, $authorID);
+            $stmt->execute();
+
+            $ISBNs = $stmt->fetchAll();
+
+            // Gets the books for each ISBN
+            foreach ($ISBNs as $ISBN) {
+                $stmt = $pdo->prepare('SELECT * FROM books WHERE ISBN = ? AND username = ? ORDER BY title, bookNumber');
+                $stmt->bindParam(1, $ISBN['book_ISBN']);
+                $stmt->bindParam(2, $_SESSION['username']);
+                $stmt->execute();
+
+                $books = array_merge($books, $stmt->fetchAll());
+            }
+        }
+
+        return $books;
+
     }
 
     function retrieveBooksByHaveRead($pdo, $haveRead) {

@@ -62,6 +62,8 @@
         <select name="option" style="margin-right: 10px;">
             <option value="ISBN">Search by ISBN</option>
             <option value="title">Search by Title</option>
+            <option value="firstName">Search by Authors First Name</option>
+            <option value="lastName">Search by Authors Last Name</option>
             <option value="publisherName">Search by Publisher Name</option>
             <option value="formatName">Search by Format Name</option>
             <option value="haveRead">Search by if you Have Read the Book</option>
