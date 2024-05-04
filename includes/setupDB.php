@@ -103,8 +103,8 @@
         "INSERT INTO publishers (name) VALUES('Orbit')",
         "INSERT INTO authors (firstName, lastName) VALUES('Andrzej', 'Sapkowski')",
         "INSERT INTO formats (name) VALUES('Novel')",
-        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 1, 2017, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username)
+                VALUES(9780316438964, 'The Witcher: The Last Wish', 1, 1, 1, 2017, 1, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9780316438964, 1)",
 
         // Inserting The Witcher: Sword of Destiny hardcover book by Andrzej Sapkowski
@@ -127,18 +127,18 @@
         "INSERT INTO formats (name) VALUES('Manga')",
 
         // Book 1
-        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9781612622767, 'Fairy Tail', 1, 3, 3, 2008, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username)
+                VALUES(9781612622767, 'Fairy Tail', 1, 3, 3, 2008, 1, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622767, 3)",
 
         // Book 2
-        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9781612622774, 'Fairy Tail', 2, 3, 3, 2008, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username)
+                VALUES(9781612622774, 'Fairy Tail', 2, 3, 3, 2008, 1, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622774, 3)",
 
         // Book 3
-        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9781612622781, 'Fairy Tail', 3, 3, 3, 2008, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username)
+                VALUES(9781612622781, 'Fairy Tail', 3, 3, 3, 2008, 1, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781612622781, 3)",
 
         // Book 4
@@ -196,8 +196,8 @@
         "INSERT INTO publishers (name) VALUES('One Peace Books')",
         "INSERT INTO authors (firstName, lastName) VALUES('Densuke', '')",
         "INSERT INTO authors (firstName, lastName) VALUES('Ban!', '')",
-        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, username)
-                VALUES(9781642732023, 'The Death Mage', 1, 5, 2, 2022, 'admin')",
+        "INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username)
+                VALUES(9781642732023, 'The Death Mage', 1, 5, 2, 2022, 1, 'admin')",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781642732023, 6)",
         "INSERT INTO book_authors (book_ISBN, author_ID) VALUES(9781642732023, 7)"
 
