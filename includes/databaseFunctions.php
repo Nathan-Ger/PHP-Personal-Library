@@ -75,60 +75,93 @@
         // 'The Witcher' would be the bookSeriesName, while 'The Last Wish' would be the title
         // This would allow for a series to be grouped together, and allow for a series to be displayed in a more organized manner
 
-        if ($field == 'none' || $value == 'none') { // If not input was received on what to search for
+        $books = [];
+
+        if ($field == 'ISBN')
+            $books = retrieveBooksByISBN($pdo, $value);
+        else if ($field == 'title')
+            $books = retrieveBooksByTitle($pdo, $value);
+        else if ($field == 'haveRead')
+            $books = retrieveBooksByHaveRead($pdo, $value);
+        else if ($field == 'formatName' || $field == 'publisherName')
+            $books = retrieveBooksByFormatPublisher($pdo, $field, $value);
+        else { // Defualt; Will get all books
             $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
             $stmt->bindParam(1, $_SESSION['username']);
             $stmt->execute();
-        } else if ($field == 'ISBN') { // If the field is ISBN or haveRead, will only get books matching the value
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE ISBN = ? AND username = ? ORDER BY title, bookNumber');
-            $stmt->bindParam(1, $value);
-            $stmt->bindParam(2, $_SESSION['username']);
-            $stmt->execute();
-        } else if ($field == 'title') { // If the field is title, will get all books that have the value in the title
-            $value = '%' . $value . '%';
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE title LIKE ? AND username = ? ORDER BY title, bookNumber');
-            $stmt->bindParam(1, $value);
-            $stmt->bindParam(2, $_SESSION['username']);
-            $stmt->execute();
-        } else if ($field == 'haveRead') {
-            $haveRead = strtolower($value);
-            if ($haveRead == 'yes' || $haveRead == 'y' || $haveRead == '1' || $haveRead == 'true' || $haveRead == 't')
-                $value = 1;
-            else
-                $value = 0;
-
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE haveRead = ? AND username = ? ORDER BY title, bookNumber');
-            $stmt->bindParam(1, $value);
-            $stmt->bindParam(2, $_SESSION['username']);
-            $stmt->execute();
-        } else if ($field == 'formatName' || $field == 'publisherName') { // If the field is formatName or publisherName, will get all books that have the value in the format or publisher
-            $table = '';
-
-            if ($field == 'formatName') {
-                $table = 'formats';
-                $fieldName = 'formatID';
-            }
-            else if ($field == 'publisherName') {
-                $table = 'publishers';
-                $fieldName = 'publisherID';
-            }
-
-            // TODO: Create a way to retrieve a list of IDs that match the value, then search for books for ALL of those IDs
-            $ID = retrieveID($pdo, $value, $table);
-
-            if (!$ID)
-                return [];
-
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $fieldName . ' = ? AND username = ? ORDER BY title, bookNumber');
-            $stmt->bindParam(1, $ID);
-            $stmt->bindParam(2, $_SESSION['username']);
-            $stmt->execute();
+            $books = $stmt->fetchAll();
         }
 
-        // TODO: Search by authors
-        // $value is the value that is being searched for. THIS DATA MUST BE SANITIZED BEFORE BEING PASSED TO THIS FUNCTION.
+        // TODO: Search by authors.
 
+        return $books;
+    }
+
+    function retrieveBooksByISBN($pdo, $ISBN) {
+        $stmt = $pdo->prepare('SELECT * FROM books WHERE ISBN = ? AND username = ? ORDER BY title, bookNumber');
+        $stmt->bindParam(1, $ISBN);
+        $stmt->bindParam(2, $_SESSION['username']);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    function retrieveBooksByTitle($pdo, $title) {
+        $title = '%' . $title . '%';
+        $stmt = $pdo->prepare('SELECT * FROM books WHERE title LIKE ? AND username = ? ORDER BY title, bookNumber');
+        $stmt->bindParam(1, $title);
+        $stmt->bindParam(2, $_SESSION['username']);
+        $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    function retrieveBooksByHaveRead($pdo, $haveRead) {
+        $haveRead = strtolower($haveRead);
+        if ($haveRead == 'yes' || $haveRead == 'y' || $haveRead == '1' || $haveRead == 'true' || $haveRead == 't')
+            $haveRead = 1;
+        else
+            $haveRead = 0;
+
+        $stmt = $pdo->prepare('SELECT * FROM books WHERE haveRead = ? AND username = ? ORDER BY title, bookNumber');
+        $stmt->bindParam(1, $haveRead);
+        $stmt->bindParam(2, $_SESSION['username']);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function retrieveBooksByFormatPublisher($pdo, $field, $value) {
+        $table = '';
+        $books = [];
+
+        if ($field == 'formatName') {
+            $table = 'formats';
+            $fieldName = 'formatID';
+        }
+        else if ($field == 'publisherName') {
+            $table = 'publishers';
+            $fieldName = 'publisherID';
+        }
+
+        $IDs = retrieveID($pdo, $value, $table);
+
+        if (!$IDs)
+            return [];
+
+        // Makes it an array if it only returns one ID,
+        // this is just to make sure it is an array for the following foreach loop.
+        if (!is_array($IDs))
+            $IDs = [$IDs];
+
+        foreach ($IDs as $ID) {
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $fieldName . ' = ?
+                                    AND username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $ID['ID']); // $ID is an array, because $IDs is an array of arrays because of how I returned it from the retrieveID function.
+            $stmt->bindParam(2, $_SESSION['username']);
+            $stmt->execute();
+
+            // Merge the newly gotten away into the books array
+            $books = array_merge($books, $stmt->fetchAll());
+        }
+        return $books;
     }
 
     function retrieveAllAuthors($pdo, $ISBN) {
@@ -171,7 +204,8 @@
 
     #region Add Book Functions
 
-    function addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName, $formatName, $year, $haveRead, $username) {
+    function addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName,
+                        $formatName, $year, $haveRead, $username) {
         $haveRead = strtolower($haveRead);
 
         if($haveRead == 'yes' || $haveRead == 'y' || $haveRead == '1' || $haveRead == 'true' || $haveRead == 't')
@@ -194,7 +228,8 @@
         $publisherID = retrieveOrAddID($pdo, $publisherName, 'publishers');
         $formatID = retrieveOrAddID($pdo, $formatName, 'formats');
 
-        $stmt = $pdo->prepare('INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID, year, haveRead, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $pdo->prepare('INSERT INTO books (ISBN, title, bookNumber, publisherID, formatID,
+                                year, haveRead, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->bindParam(1, $ISBN);
         $stmt->bindParam(2, $title);
         $stmt->bindParam(3, $bookNumber);
@@ -257,10 +292,10 @@
         $stmt->bindParam(1, $name);
         $stmt->execute();
 
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll();
         
         if ($result) {
-            return $result['ID'];
+            return $result;
         } else {
             return false;
         }
