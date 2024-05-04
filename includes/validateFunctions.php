@@ -6,9 +6,6 @@
     * This file is used for validation functions,
     * such as validating the registration form and the add book form.
     */
-    require_once '../includes/databaseFunctions.php';
-
-    // TODO: Change so all error message are returned in a way to make them look much better
 
     #region Registration Validation
 

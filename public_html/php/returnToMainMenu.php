@@ -6,5 +6,6 @@
     * This file is used to return the user to the main menu.
     */
     
-    die ("<p><a href='homePageForm.php'>Click here to return to Main Menu</a></p>"); //TODO: Change so it directly brings you to the main menu.
+    header('Location: ../html/homePageForm.php');
+    exit();
 ?>

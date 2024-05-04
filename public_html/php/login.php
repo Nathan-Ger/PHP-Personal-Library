@@ -1,8 +1,8 @@
 <?php
     session_start();
 
-    require_once '../src/credentials.php';
-    require_once '../includes/databaseFunctions.php';
+    require_once '../../src/credentials.php';
+    require_once '../../includes/databaseFunctions.php';
 
     /* login.php
     * @author Nathanael Germain
@@ -26,7 +26,7 @@
 
         echo htmlspecialchars("Welcome " . $_SESSION['username']);
 
-        die ("<p><a href='homePageForm.php'>Click here to continue</a></p>"); //TODO: Bring up a box that says Welcome $_SESSION['username'] and be able to exit out of it and be at the home page.
+        die ("<p><a href='../html/homePageForm.php'>Click here to continue</a></p>");
     } else {
         die ("Please enter your username and password");
     }

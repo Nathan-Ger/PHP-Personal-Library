@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['username'])) {
-    header('Location: homePageForm.php'); //TODO: Bring to the home page
+    header('Location: homePageForm.php');
     exit();
 }
 ?>
@@ -20,8 +20,8 @@ if (isset($_SESSION['username'])) {
 <head>
     <title> Registration Form </title>
     <meta name="fileName" content="registerForm.php">
-    <link rel="stylesheet" href="style.css">
-    <script src="registerValidation.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../javascript/registerValidation.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@ if (isset($_SESSION['username'])) {
         BCS350 Capstone Project -- Nathanael Germain
     </div>
 
-    <form action="register.php" method="POST" onsubmit="return validate(this)">
+    <form action="../php/register.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username:</label>
             <input type="text" name="username" id="username"

@@ -1,5 +1,4 @@
 <?php
-    require_once '../src/credentials.php';
 
     /* databaseFunctions.php
     * @author Nathanael Germain
@@ -80,14 +79,25 @@
             $stmt = $pdo->prepare('SELECT * FROM books WHERE username = ? ORDER BY title, bookNumber');
             $stmt->bindParam(1, $_SESSION['username']);
             $stmt->execute();
-        } else if ($field == 'ISBN' || $field == 'haveRead') { // If the field is ISBN or haveRead, will only get books matching the value
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $field . ' = ? AND username = ? ORDER BY title, bookNumber');
+        } else if ($field == 'ISBN') { // If the field is ISBN or haveRead, will only get books matching the value
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE ISBN = ? AND username = ? ORDER BY title, bookNumber');
             $stmt->bindParam(1, $value);
             $stmt->bindParam(2, $_SESSION['username']);
             $stmt->execute();
         } else if ($field == 'title') { // If the field is title, will get all books that have the value in the title
             $value = '%' . $value . '%';
-            $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $field . ' LIKE ? AND username = ? ORDER BY title, bookNumber');
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE title LIKE ? AND username = ? ORDER BY title, bookNumber');
+            $stmt->bindParam(1, $value);
+            $stmt->bindParam(2, $_SESSION['username']);
+            $stmt->execute();
+        } else if ($field == 'haveRead') {
+            $haveRead = strtolower($value);
+            if ($haveRead == 'yes' || $haveRead == 'y' || $haveRead == '1' || $haveRead == 'true' || $haveRead == 't')
+                $value = 1;
+            else
+                $value = 0;
+
+            $stmt = $pdo->prepare('SELECT * FROM books WHERE haveRead = ? AND username = ? ORDER BY title, bookNumber');
             $stmt->bindParam(1, $value);
             $stmt->bindParam(2, $_SESSION['username']);
             $stmt->execute();
@@ -115,7 +125,7 @@
             $stmt->execute();
         }
 
-        // TODO: Add more fields to search by, such as author, publisher, format, ISBN, title, and haveRead.
+        // TODO: Search by authors
         // $value is the value that is being searched for. THIS DATA MUST BE SANITIZED BEFORE BEING PASSED TO THIS FUNCTION.
 
         return $stmt->fetchAll();
@@ -195,14 +205,8 @@
         $stmt->bindParam(8, $username);
         $stmt->execute();
 
-        // TODO: Add a check for book_authors to see if the author and ISBN combination is already in the table.
-        // Similar to retrieveOrAddAuthor, but for book_authors.
-        for ($i = 0; $i < count($authorIDs); $i++) {
-            $stmt = $pdo->prepare('INSERT INTO book_authors (book_ISBN, author_ID) VALUES (?, ?)');
-            $stmt->bindParam(1, $ISBN);
-            $stmt->bindParam(2, $authorIDs[$i]);
-            $stmt->execute();
-        }
+        foreach ($authorIDs as $authorsID)
+            checkBookAuthors($pdo, $ISBN, $authorsID);
     }
 
     function bookDatabaseCheck($pdo, $ISBN, $username) {
@@ -223,13 +227,28 @@
         if (!$stmt->rowCount()) {
             $stmt = $pdo->prepare('INSERT INTO ' . $table . ' (name) VALUES (?)');
             $stmt->bindParam(1, $name);
-            $stmt->execute([$name]);
+            $stmt->execute();
 
             return $pdo->lastInsertId();
         } else {
             $result = $stmt->fetch();
             return $result['ID'];
         }
+    }
+
+    function checkBookAuthors($pdo, $ISBN, $authorID) {
+        $stmt = $pdo->prepare('SELECT * FROM book_authors WHERE book_ISBN = ? AND author_ID = ?');
+        $stmt->bindParam(1, $ISBN);
+        $stmt->bindParam(2, $authorID);
+        $stmt->execute();
+
+        if (!$stmt->rowCount()) {
+            $stmt = $pdo->prepare('INSERT INTO book_authors (book_ISBN, author_ID) VALUES (?, ?)');
+            $stmt->bindParam(1, $ISBN);
+            $stmt->bindParam(2, $authorID);
+            $stmt->execute();
+        }
+
     }
 
     function retrieveID($pdo, $name, $table) {

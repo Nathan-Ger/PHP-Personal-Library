@@ -3,7 +3,7 @@
 
     // Checks to make sure there is a session active.
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
-        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
+        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>");
     }
 ?>
 
@@ -21,8 +21,8 @@
 <head>
     <title> Add Book </title>
     <meta name="fileName" content="addBookModule.php">
-    <link rel="stylesheet" href="style.css">
-    <script src="addBookValidation.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../javascript/addBookValidation.js"></script>
 </head>
 
 <body>
@@ -32,18 +32,18 @@
             BCS350 Capstone Project -- Nathanael Germain
         </div>
         <div class="form-group" style="display: flex; justify-content: flex-end;">
-            <form action="returnToMainMenu.php" method="POST">
+            <form action="../php/returnToMainMenu.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Main Menu</button>
             </form>
-            <form action="logout.php" method="POST">
+            <form action="../php/logout.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
             </form>
         </div>
     </div>
 
-    <form action="addBook.php" method="POST" onsubmit="return validate(this)">
+    <form action="../php/addBook.php" method="POST" onsubmit="return validate(this)">
         <div class="form-group">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="ISBN">ISBN-13:</label>
             <input type="text" name="ISBN" id="ISBN"

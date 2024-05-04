@@ -3,11 +3,8 @@
 
     // Checks to make sure there is a session active.
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
-        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
+        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>");
     }
-
-    // TODO: Add isset functions to check for data to display, for now it is defaulted to none.
-    // This will allow us to search for books by specific pieces of data.
 
     if (isset($_SESSION['field']) && isset($_SESSION['value'])) {
         $field = $_SESSION['field'];
@@ -35,7 +32,7 @@
 <head>
     <title> Book List </title>
     <meta name="fileName" content="listDataModule.php">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -45,19 +42,16 @@
             BCS350 Capstone Project -- Nathanael Germain
         </div>
         <div class="form-group" style="display: flex; justify-content: flex-end;">
-            <form action="returnToMainMenu.php" method="POST">
+            <form action="../php/returnToMainMenu.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Main Menu</button>
             </form>
-            <form action="logout.php" method="POST">
+            <form action="../php/logout.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
             </form>
         </div>
     </div>
-
-    <!-- TODO: Add a search Function, below the above -->
-    <!-- Search function will only show pieces of data that were searched(bring to another html) -->
 
     <!-- TODO: Add a way to edit book data -->
     <!-- You would have the user make a selection of what to edit, then bring up a form to edit the data -->
@@ -73,8 +67,8 @@
             <th>Have Read?</th>
         </tr>
         <?php
-            require_once '../src/credentials.php';
-            require_once '../includes/databaseFunctions.php';
+            require_once '../../src/credentials.php';
+            require_once '../../includes/databaseFunctions.php';
 
             try {
                 $pdo = new PDO($attr, $user, $password, $opts);
@@ -115,7 +109,7 @@
 
                 // Adds a delete button to each row
                 echo "<td>";
-                echo "<form action='delete.php' method='POST'>";
+                echo "<form action='../php/delete.php' method='POST'>";
                 echo "<input type='hidden' name='ISBN' value='" . $ISBN . "'>";
                 echo "<input type='submit' value='Delete' class='delete-button'>";
                 echo "</form>";

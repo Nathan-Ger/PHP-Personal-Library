@@ -3,7 +3,7 @@
 
     // Checks to make sure there is a session active.
     if (!isset($_SESSION['username']) || !isset($_SESSION['email'])) {
-        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>"); //TODO: Bring up a box that says something similar to the message! and be able to exit out of it and be at the login page.
+        die ("<p><a href='loginForm.php'>You are not logged in! Click here to login.</a></p>");
     }
 ?>
 
@@ -20,7 +20,7 @@
 <head>
     <title> Book Search </title>
     <meta name="fileName" content="searchBookModule.php">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <script>
@@ -48,18 +48,17 @@
             BCS350 Capstone Project -- Nathanael Germain
         </div>
         <div class="form-group" style="display: flex; justify-content: flex-end;">
-            <form action="returnToMainMenu.php" method="POST">
+            <form action="../php/returnToMainMenu.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Main Menu</button>
             </form>
-            <form action="logout.php" method="POST">
+            <form action="../php/logout.php" method="POST">
                 <button type="submit" class="bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
             </form>
         </div>
     </div>
-    <!-- TODO: Create searchBook.php, create session variables and send to listDataModule -->
-    <form action="searchBook.php" method="POST" class="form-group-search" onsubmit="return validate(this)">
+    <form action="../php/searchBook.php" method="POST" class="form-group-search" onsubmit="return validate(this)">
         <select name="option" style="margin-right: 10px;">
             <option value="ISBN">Search by ISBN</option>
             <option value="title">Search by Title</option>

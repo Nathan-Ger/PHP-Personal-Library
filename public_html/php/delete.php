@@ -1,8 +1,8 @@
 <?php
     session_start();
 
-    require_once '../src/credentials.php';
-    require_once '../includes/databaseFunctions.php';
+    require_once '../../src/credentials.php';
+    require_once '../../includes/databaseFunctions.php';
 
     /* delete.php
     * @author Nathanael Germain
@@ -25,6 +25,6 @@
 
     deleteBook($pdo, $ISBN);
 
-    echo "Book deleted!"; // TODO: Change it so it looks better
-    die ("<p><a href='homePageForm.php'>Click here to return to home page</a></p>"); //TODO: Bring up a box that says Book Deleted! with a button to saying OK and be able to exit out of it and be at the home page.
+    echo "Book deleted!";
+    die ("<p><a href='../html/homePageForm.php'>Click here to return to home page</a></p>");
 ?>

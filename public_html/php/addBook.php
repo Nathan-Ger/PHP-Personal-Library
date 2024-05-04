@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    require_once '../src/credentials.php';
-    require_once '../includes/validateFunctions.php';
-    require_once '../includes/databaseFunctions.php';
+    require_once '../../src/credentials.php';
+    require_once '../../includes/validateFunctions.php';
+    require_once '../../includes/databaseFunctions.php';
 
     /* addBook.php
     * @author Nathanael Germain
@@ -54,12 +54,11 @@
 
         addBook($pdo, $ISBN, $title, $bookNumber, $authorDetails, $publisherName, $formatName, $year, $haveRead, $_SESSION['username']);
 
-        echo "Book added succesfully!"; // TODO: Change it so it looks better
-        die ("<p><a href='listDataModule.php'>Click here to return to you list of books!</a></p>");
-        //TODO: Change it so it outputs a textblock saying registration successful.
+        echo "Book added succesfully!";
+        die ("<p><a href='../html/listDataModule.php'>Click here to return to you list of books!</a></p>");
     } else {
         echo $fail;
-        die ("<p><a href='addBookModule.php'>Click here to return to the Add Book Module</a></p>"); //TODO: Bring up a box that says return here and be able to exit out of it and be at the add book page.
+        die ("<p><a href='../html/addBookModule.php'>Click here to return to the Add Book Module</a></p>");
     }
 
 

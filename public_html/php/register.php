@@ -1,7 +1,7 @@
 <?php
-    require_once '../src/credentials.php';
-    require_once '../includes/validateFunctions.php';
-    require_once '../includes/databaseFunctions.php';
+    require_once '../../src/credentials.php';
+    require_once '../../includes/validateFunctions.php';
+    require_once '../../includes/databaseFunctions.php';
 
     /* register.php
     * @author Nathanael Germain
@@ -39,12 +39,11 @@
 
         addUser($pdo, $username, $email, $hashedPassword);
 
-        echo "Registration successful! Please log in."; // TODO: Change it so it looks better
+        echo "Registration successful! Please log in.";
 
-        die ("<p><a href='loginForm.php'>Click here to login</a></p>"); //TODO: Bring up a box that says Login Here! and be able to exit out of it and be at the login page.
-        //TODO: Change it so it outputs a textblock saying registration successful.
+        die ("<p><a href='../html/loginForm.php'>Click here to login</a></p>");
     } else {
         echo $fail;
-        include 'registerForm.php'; // Brings you back to the registration page if there was an error.
+        include '../html/registerForm.php'; // Brings you back to the registration page if there was an error.
     }
 ?>
