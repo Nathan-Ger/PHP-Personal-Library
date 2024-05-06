@@ -43,7 +43,7 @@
 
         die ("<p><a href='../html/loginForm.php'>Click here to login</a></p>");
     } else {
-        echo $fail;
+        echo $fail . "<br>";
         include '../html/registerForm.php'; // Brings you back to the registration page if there was an error.
     }
 ?>

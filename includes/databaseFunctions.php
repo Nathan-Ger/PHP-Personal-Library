@@ -103,7 +103,7 @@
         $stmt->bindParam(1, $ISBN);
         $stmt->bindParam(2, $_SESSION['username']);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
 
     function retrieveBooksByTitle($pdo, $title) {
@@ -394,15 +394,6 @@
     }
 
     #endregion
-
-    function searchBook($pdo, $searchInput, $option) {
-        $stmt = $pdo->prepare('SELECT * FROM books WHERE ' . $option . ' = ? AND username = ?');
-        $stmt->bindParam(1, $searchInput);
-        $stmt->bindParam(2, $_SESSION['username']);
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-    }
 
     function deleteBook($pdo, $ISBN) {
         $stmt = $pdo->prepare('DELETE FROM books WHERE ISBN = ? AND username = ?');

@@ -11,39 +11,39 @@
 
     function validateUsername($pdo, $username) {
         if (duplicateUsername($pdo, $username))
-            return "Username already exists.\\n";
+            return "Username already exists.";
         if ($username == "")
-            return "No Username was entered.\\n";
+            return "No Username was entered.";
         else if (strlen($username) < 6)
-            return "Usernames must be at least 6 characters.\\n";
+            return "Usernames must be at least 6 characters.";
         else if (preg_match("/[^a-zA-Z0-9_-]/", $username))
-            return "Only a-Z, A-Z 0-9, - and _ allowed in Usernames.\\n";
+            return "Only a-Z, A-Z 0-9, - and _ allowed in Usernames.";
         return "";
     }
 
     function validateEmail($email) {
         if ($email == "")
-            return "No Email was entered.\\n";
+            return "No Email was entered.";
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-            return "The Email Address is invalid.\\n";
+            return "The Email Address is invalid.";
         return "";
     }
     
     function validatePassword($password) {
         if ($password == "")
-            return "No Password was entered.\\n";
+            return "No Password was entered.";
         else if (strlen($password) < 8)
-            return "Passwords must be at least 8 characters.\\n";
+            return "Passwords must be at least 8 characters.";
         else if (!preg_match("/[a-z]/", $password) ||
                     !preg_match("/[A-Z]/", $password) ||
                     !preg_match("/[0-9]/", $password))
-            return "Passwords require 1 each of a-z, A-Z and 0-9.\\n";
+            return "Passwords require 1 each of a-z, A-Z and 0-9.";
         return "";
     }
 
     function validateConfirmPassword($password, $confirmPassword) {
         if ($password != $confirmPassword)
-            return "Passwords do not match.\\n";
+            return "Passwords do not match.";
         return "";
     }
 
@@ -59,61 +59,61 @@
 
     function validateISBN($pdo, $ISBN, $username) {
         if (bookDatabaseCheck($pdo, $ISBN, $username))
-            return "ISBN already exists.\\n";
+            return "ISBN already exists.";
         if ($ISBN == "")
-            return "No ISBN was entered.\\n";
+            return "No ISBN was entered.";
         else if (strlen($ISBN) != 13)
-            return "ISBN must be 13 characters.\\n";
+            return "ISBN must be 13 characters.";
         else if (preg_match("/[^0-9]/", $ISBN))
-            return "Only 0-9 allowed in ISBN.\\n";
+            return "Only 0-9 allowed in ISBN.";
         return "";
     }
 
     function validateTitle($title) {
         if ($title == "")
-            return "No Title was entered.\\n";
+            return "No Title was entered.";
         return "";
     }
 
     function validateBookNumber($bookNumber) {
         if ($bookNumber == "")
-            return "No Book Number was entered.\\n";
+            return "No Book Number was entered.";
         else if (preg_match("/[^0-9]/", $bookNumber))
-            return "Only 0-9 allowed in Book Number.\\n";
+            return "Only 0-9 allowed in Book Number.";
         return "";
     }
 
     function validateAuthors($authors) {
         if ($authors == "")
-            return "No Author was entered.\\n";
+            return "No Author was entered.";
         return "";
     }
 
     function validatePubName($publisherName) {
         if ($publisherName == "")
-            return "No Publisher Name was entered.\\n";
+            return "No Publisher Name was entered.";
         return "";
     }
 
     function validateFormatName($formatName) {
         if ($formatName == "")
-            return "No Format Name was entered.\\n";
+            return "No Format Name was entered.";
         return "";
     }
 
     function validateYear($year) {
         if ($year == "")
-            return "No Year was entered.\\n";
+            return "No Year was entered.";
         else if (strlen($year) != 4)
-            return "Year must be 4 characters.\\n";
+            return "Year must be 4 characters.";
         else if (preg_match("/[^0-9]/", $year))
-            return "Only 0-9 allowed in Year.\\n";
+            return "Only 0-9 allowed in Year.";
         return "";
     }
 
     function validateHaveRead($haveRead) {
         if ($haveRead == "")
-            return "No Have Read was entered.\\n";
+            return "No Have Read was entered.";
 
         // Convert to lowercase for comparison
         $haveRead = strtolower($haveRead);
@@ -123,7 +123,7 @@
                 && $haveRead != "1" && $haveRead != "0"
                 && $haveRead != "y" && $haveRead != "n"
                 && $haveRead != "t" && $haveRead != "f")
-            return "Only Yes or No allowed in Have Read.\\n";
+            return "Only Yes or No allowed in Have Read.";
         return "";
     }
 
@@ -131,7 +131,7 @@
 
     function validateSearchInput($searchInput) {
         if ($searchInput == "")
-            return "No search input was entered.\\n";
+            return "No search input was entered.";
         return "";
     }
 
