@@ -83,4 +83,3 @@ This will then setup the database for use, as well as insert fake data for a use
 This is my first time writing php code, creating pages with html, and the first time I have ever tried to write documentation.
 So I hope this all reads well and the code is, somewhat, well written!
 Feel free to let me know anything you might recommend I change, or certainly some recommendations for documentation writing!
-You can feel free to reach out to me at Nathanlgermain@gmail.com.
